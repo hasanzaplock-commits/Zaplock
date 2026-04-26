@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ZapLock — Attendance Portal</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:#f0f4ff}
+.topbar{background:#185FA5;display:flex;align-items:center;gap:14px;padding:14px 22px}
+.zlogo{width:42px;height:42px;background:#0C447C;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.brand{color:#fff;font-size:17px;font-weight:500;letter-spacing:-0.3px}
+.brand-sub{color:#B5D4F4;font-size:11px;margin-top:1px}
+.tclock{margin-left:auto;text-align:right}
+.ttime{font-size:21px;font-weight:500;color:#fff;letter-spacing:1.5px}
+.tdate-sm{font-size:11px;color:#B5D4F4;margin-top:2px}
+.sync-pill{display:flex;align-items:center;gap:6px;background:rgba(0,0,0,0.2);border-radius:20px;padding:4px 12px;font-size:11px;color:#B5D4F4;margin-right:4px}
+.sync-dot{width:6px;height:6px;border-radius:50%;background:#4ADE80}
+.sync-dot.warn{background:#FCD34D}
+.nav{background:#0C447C;display:flex;padding:0 22px;gap:2px}
+.nb{padding:11px 18px;font-size:13px;border:none;background:none;cursor:pointer;color:#B5D4F4;border-bottom:3px solid transparent;font-family:inherit;font-weight:500}
+.nb.on{color:#fff;border-bottom:3px solid #EF9F27}
+.page{padding:20px}
+.sec{display:none}.sec.on{display:block}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.sc{border-radius:12px;padding:16px 18px;border:none}
+.sc-blue{background:#185FA5}.sc-green{background:#3B6D11}.sc-red{background:#A32D2D}.sc-amber{background:#854F0B}
+.sc-lbl{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.06em;color:rgba(255,255,255,0.72);margin-bottom:8px}
+.sc-val{font-size:30px;font-weight:500;color:#fff}
+.sc-sub{font-size:11px;color:rgba(255,255,255,0.6);margin-top:4px}
+.card{background:#fff;border-radius:12px;border:0.5px solid #dde3f0;overflow:hidden;margin-bottom:16px}
+.ch{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:0.5px solid #eef0f6}
+.ch-left{display:flex;align-items:center;gap:10px}
+.ch-dot{width:8px;height:8px;border-radius:50%;background:#185FA5}
+.ch-title{font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:0.06em;color:#5F5E5A}
+.ch-meta{font-size:12px;color:#888780}
+.emp-row{display:flex;align-items:center;gap:14px;padding:14px 18px;border-bottom:0.5px solid #eef0f6}
+.emp-row:last-child{border-bottom:none}
+.av{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;flex-shrink:0;border:2px solid rgba(255,255,255,0.6)}
+.en{flex:1}
+.ename{font-size:14px;font-weight:500;color:#2C2C2A}
+.erole{font-size:12px;color:#888780;margin-top:1px}
+.eright{text-align:right}
+.etime{font-size:11px;color:#888780;margin-top:4px}
+.enote{font-size:11px;color:#B4B2A9;margin-top:2px}
+.badge{display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:20px;font-size:11px;font-weight:500}
+.b-p{background:#EAF3DE;color:#27500A}.b-a{background:#FCEBEB;color:#791F1F}.b-l{background:#FAEEDA;color:#633806}.b-o{background:#E6F1FB;color:#0C447C}
+.dot6{width:6px;height:6px;border-radius:50%;display:inline-block}
+.dg{background:#639922}.dr{background:#E24B4A}.da{background:#EF9F27}.db{background:#378ADD}
+.hero{background:#185FA5;border-radius:12px;padding:24px;text-align:center;margin-bottom:18px}
+.hero-t{font-size:42px;font-weight:500;color:#fff;letter-spacing:3px}
+.hero-d{font-size:13px;color:#B5D4F4;margin-top:6px}
+.hero-info{display:flex;justify-content:center;gap:24px;margin-top:14px}
+.hi-item{text-align:center}
+.hi-val{font-size:13px;font-weight:500;color:#fff}
+.hi-lbl{font-size:11px;color:#B5D4F4;margin-top:2px}
+.fl{font-size:12px;font-weight:500;color:#5F5E5A;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px;display:block}
+select,input[type=text]{width:100%;padding:9px 12px;font-size:14px;border:1px solid #dde3f0;border-radius:8px;background:#fff;color:#2C2C2A;font-family:inherit}
+.cb{padding:18px}
+.ff{margin-bottom:14px}
+.br{display:flex;gap:10px;margin-top:6px}
+.btn{flex:1;padding:11px;border-radius:8px;font-size:14px;cursor:pointer;font-family:inherit;border:none;font-weight:500}
+.btn-in{background:#185FA5;color:#fff}.btn-out{background:#A32D2D;color:#fff}
+.btn:active{transform:scale(0.98)}
+.toast{padding:10px 14px;border-radius:8px;font-size:13px;margin-bottom:14px;display:none;font-weight:500}
+.tok{background:#EAF3DE;color:#27500A;border:0.5px solid #C0DD97}
+.terr{background:#FCEBEB;color:#791F1F;border:0.5px solid #F7C1C1}
+.rctrl{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center}
+.rs{flex:1;min-width:160px;padding:8px 12px;font-size:13px;border:1px solid #dde3f0;border-radius:8px;background:#fff;color:#2C2C2A;font-family:inherit}
+.fb{padding:5px 14px;border-radius:20px;font-size:12px;cursor:pointer;border:1px solid #dde3f0;background:#fff;color:#5F5E5A;font-family:inherit;font-weight:500}
+.fb.on{background:#185FA5;color:#fff;border-color:#185FA5}
+table{width:100%;border-collapse:collapse;font-size:13px;table-layout:fixed}
+th{text-align:left;padding:10px 14px;font-size:11px;font-weight:500;color:#888780;text-transform:uppercase;letter-spacing:0.05em;border-bottom:0.5px solid #eef0f6;background:#f8f9fd}
+td{padding:11px 14px;border-bottom:0.5px solid #eef0f6;color:#2C2C2A}
+tr:last-child td{border-bottom:none}
+.empty{text-align:center;padding:28px;color:#888780;font-size:13px}
+.clr-btn{padding:5px 14px;border-radius:8px;font-size:12px;cursor:pointer;border:1px solid #F7C1C1;background:#FCEBEB;color:#791F1F;font-family:inherit;font-weight:500}
+.section-gap{margin-top:18px}
+.tag-label{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:0.06em}
+.tg-today{background:#CECBF6;color:#3C3489}
+.spinner{display:inline-block;width:12px;height:12px;border:2px solid #dde3f0;border-top-color:#185FA5;border-radius:50%;animation:spin 0.7s linear infinite;vertical-align:middle;margin-right:4px}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="zlogo">
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+      <path d="M11 2L4 8v12h14V8L11 2z" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/>
+      <rect x="8" y="11" width="6" height="6" rx="1.2" fill="#fff" opacity="0.9"/>
+      <circle cx="11" cy="14" r="1.2" fill="#0C447C"/>
+      <path d="M9 8h4" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <div>
+    <div class="brand">ZapLock</div>
+    <div class="brand-sub">Attendance Management System</div>
+  </div>
+  <div id="sync-pill" class="sync-pill" style="display:none">
+    <span class="sync-dot" id="sync-dot"></span>
+    <span id="sync-label">Syncing…</span>
+  </div>
+  <div class="tclock">
+    <div class="ttime" id="tc">00:00:00</div>
+    <div class="tdate-sm" id="td"></div>
+  </div>
+</div>
+
+<div class="nav">
+  <button class="nb on" onclick="go('dash',this)">Dashboard</button>
+  <button class="nb" onclick="go('mark',this)">Mark Attendance</button>
+  <button class="nb" onclick="go('rec',this)">Records</button>
+</div>
+
+<div class="page">
+
+  <!-- DASHBOARD -->
+  <div class="sec on" id="s-dash">
+    <div class="stats">
+      <div class="sc sc-blue"><div class="sc-lbl">Team size</div><div class="sc-val" id="st-t">3</div><div class="sc-sub">total members</div></div>
+      <div class="sc sc-green"><div class="sc-lbl">Present</div><div class="sc-val" id="st-p">0</div><div class="sc-sub">checked in today</div></div>
+      <div class="sc sc-red"><div class="sc-lbl">Absent</div><div class="sc-val" id="st-a">3</div><div class="sc-sub">not yet in</div></div>
+      <div class="sc sc-amber"><div class="sc-lbl">Late</div><div class="sc-val" id="st-l">0</div><div class="sc-sub">after 10:30 AM</div></div>
+    </div>
+    <div class="card">
+      <div class="ch">
+        <div class="ch-left"><div class="ch-dot"></div><span class="ch-title">Today's attendance</span></div>
+        <span class="ch-meta" id="dash-d"></span>
+      </div>
+      <div id="dash-list"></div>
+    </div>
+  </div>
+
+  <!-- MARK ATTENDANCE -->
+  <div class="sec" id="s-mark">
+    <div class="hero">
+      <div class="hero-t" id="hc">00:00:00</div>
+      <div class="hero-d" id="hd"></div>
+      <div class="hero-info">
+        <div class="hi-item"><div class="hi-val">10:00 AM</div><div class="hi-lbl">Check-in time</div></div>
+        <div class="hi-item"><div class="hi-val">10:30 AM</div><div class="hi-lbl">Late after</div></div>
+        <div class="hi-item"><div class="hi-val">5:00 PM</div><div class="hi-lbl">Check-out time</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="ch">
+        <div class="ch-left"><div class="ch-dot" style="background:#EF9F27"></div><span class="ch-title">Mark attendance</span></div>
+        <span id="saving-lbl" style="font-size:12px;color:#888780;display:none"><span class="spinner"></span>Saving…</span>
+      </div>
+      <div class="cb">
+        <div id="toast" class="toast"></div>
+        <div class="ff"><label class="fl">Team member</label><select id="esel"></select></div>
+        <div class="ff"><label class="fl">Note (optional)</label><input type="text" id="ni" placeholder="e.g. Working remotely"/></div>
+        <div class="br">
+          <button class="btn btn-in" onclick="doIn()">Check In</button>
+          <button class="btn btn-out" onclick="doOut()">Check Out</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RECORDS -->
+  <div class="sec" id="s-rec">
+    <div class="rctrl">
+      <input class="rs" type="text" id="rsq" placeholder="Search name or role..." oninput="renderRec()"/>
+      <button class="fb on" onclick="setF('all',this)">All</button>
+      <button class="fb" onclick="setF('present',this)">Present</button>
+      <button class="fb" onclick="setF('absent',this)">Absent</button>
+      <button class="fb" onclick="setF('late',this)">Late</button>
+    </div>
+    <div class="card">
+      <div class="ch">
+        <div class="ch-left"><div class="ch-dot" style="background:#3B6D11"></div><span class="ch-title">Today — <span id="rec-today-lbl"></span></span></div>
+        <button class="clr-btn" onclick="clearToday()">Clear today</button>
+      </div>
+      <div style="overflow-x:auto">
+        <table>
+          <thead><tr><th style="width:28%">Name</th><th style="width:24%">Role</th><th style="width:14%">In</th><th style="width:14%">Out</th><th style="width:20%">Status</th></tr></thead>
+          <tbody id="rec-body"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card section-gap">
+      <div class="ch">
+        <div class="ch-left"><div class="ch-dot" style="background:#854F0B"></div><span class="ch-title">Full history (30 days)</span></div>
+        <span class="ch-meta" id="hist-count"></span>
+      </div>
+      <div style="overflow-x:auto">
+        <table>
+          <thead><tr><th style="width:18%">Date</th><th style="width:26%">Name</th><th style="width:18%">Role</th><th style="width:13%">In</th><th style="width:13%">Out</th><th style="width:12%">Status</th></tr></thead>
+          <tbody id="hist-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ─── STEP 1: Paste your Apps Script Web App URL here after setup ─── */
+const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbx67Ym0prhocIa72F2JTqFlP61PjWLlnB4airAsIdL3dxwNZ4TM-6uI3bodAqIGrPRJ/exec';
+
+/* ─── Team ─── */
+const TEAM = [
+  {id:'mh', name:'Muhammad Hassan', role:'CEO',                initials:'MH', bg:'#185FA5', tc:'#fff'},
+  {id:'as', name:'Aqsa Sohail',     role:'COO',                initials:'AS', bg:'#993556', tc:'#fff'},
+  {id:'ms', name:'Mahnoor Shehzad', role:'CFO & Research Lead', initials:'MS', bg:'#0F6E56', tc:'#fff'},
+];
+
+/* ─── Time rules ─── */
+const LATE_MINS = 10*60+30; // 10:30 AM
+
+/* ─── localStorage helpers (30-day expiry) ─── */
+function lsGet(k){
+  try{
+    const raw=localStorage.getItem(k);
+    if(!raw)return null;
+    const o=JSON.parse(raw);
+    if(o.exp&&Date.now()>o.exp){localStorage.removeItem(k);return null;}
+    return o.val;
+  }catch{return null;}
+}
+function lsSet(k,v,days){
+  try{localStorage.setItem(k,JSON.stringify({val:v,exp:Date.now()+days*864e5}));}catch{}
+}
+
+const todayKey = () => 'zl_day_' + new Date().toISOString().slice(0,10);
+const HIST_KEY = 'zl_hist_v3';
+
+let TODAY = lsGet(todayKey()) || {};
+let HIST  = lsGet(HIST_KEY)  || [];
+
+function saveToday(){ lsSet(todayKey(), TODAY, 1.5); }
+function saveHist() { lsSet(HIST_KEY,  HIST,  30);  }
+
+/* ─── Google Sheets sync ─── */
+const sheetsReady = () => SHEETS_URL && SHEETS_URL !== 'YOUR_APPS_SCRIPT_URL_HERE';
+
+function showSyncPill(label, ok){
+  const pill = document.getElementById('sync-pill');
+  const dot  = document.getElementById('sync-dot');
+  const lbl  = document.getElementById('sync-label');
+  pill.style.display = 'flex';
+  dot.className = 'sync-dot' + (ok ? '' : ' warn');
+  lbl.textContent = label;
+}
+
+async function pushToSheets(payload){
+  if(!sheetsReady()) return;
+  document.getElementById('saving-lbl').style.display = 'inline';
+  try{
+    const qs = new URLSearchParams(payload).toString();
+    await fetch(SHEETS_URL + '?' + qs, {method:'GET', mode:'no-cors'});
+    showSyncPill('Saved to Sheets', true);
+  }catch{
+    showSyncPill('Sync error', false);
+  }finally{
+    document.getElementById('saving-lbl').style.display = 'none';
+  }
+}
+
+async function fetchFromSheets(){
+  if(!sheetsReady()) return;
+  showSyncPill('Syncing…', true);
+  try{
+    const res  = await fetch(SHEETS_URL + '?action=getAll');
+    const data = await res.json();
+    if(data && data.records){
+      HIST = data.records;
+      saveHist();
+      const tod = new Date().toISOString().slice(0,10);
+      TODAY = {};
+      data.records.filter(r=>r.date===tod).forEach(r=>{
+        TODAY[r.empId] = {ci:r.checkIn, co:r.checkOut||null, note:r.note||''};
+      });
+      saveToday();
+      updateDash();
+      if(document.getElementById('s-rec').classList.contains('on')){renderRec();renderHist();}
+    }
+    showSyncPill('Synced', true);
+  }catch{
+    showSyncPill('Offline — local data shown', false);
+  }
+}
+
+/* ─── Helpers ─── */
+function todayISO(){ return new Date().toISOString().slice(0,10); }
+function nowHHMM() { return new Date().toTimeString().slice(0,5); }
+function toMins(hhmm){ const[h,m]=hhmm.split(':').map(Number); return h*60+m; }
+
+function getStatus(id){
+  const r=TODAY[id];
+  if(!r||!r.ci) return 'absent';
+  return toMins(r.ci) > LATE_MINS ? 'late' : 'present';
+}
+
+function badge(s){
+  const m={
+    present:`<span class="badge b-p"><span class="dot6 dg"></span>Present</span>`,
+    absent: `<span class="badge b-a"><span class="dot6 dr"></span>Absent</span>`,
+    late:   `<span class="badge b-l"><span class="dot6 da"></span>Late</span>`,
+    out:    `<span class="badge b-o"><span class="dot6 db"></span>Checked out</span>`,
+  };
+  return m[s]||m.absent;
+}
+
+/* ─── Clock ─── */
+function clock(){
+  const n=new Date();
+  const t=n.toTimeString().slice(0,8);
+  const d=n.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  ['tc','hc'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=t;});
+  ['td','hd'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=d;});
+  const dm=document.getElementById('dash-d');
+  if(dm)dm.textContent=n.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+  const rl=document.getElementById('rec-today-lbl');
+  if(rl)rl.textContent=n.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+}
+
+/* ─── Dashboard ─── */
+function updateDash(){
+  let p=0,l=0;
+  TEAM.forEach(e=>{
+    const s=getStatus(e.id);
+    if(s==='present')p++;
+    if(s==='late'){p++;l++;}
+  });
+  document.getElementById('st-p').textContent=p;
+  document.getElementById('st-a').textContent=TEAM.length-p;
+  document.getElementById('st-l').textContent=l;
+
+  document.getElementById('dash-list').innerHTML=TEAM.map(e=>{
+    const r=TODAY[e.id]; const s=getStatus(e.id);
+    const bs=r&&r.co?badge('out'):badge(s);
+    const ti=r&&r.ci?`In: ${r.ci}${r.co?' · Out: '+r.co:''}`:'Not yet checked in';
+    return`<div class="emp-row">
+      <div class="av" style="background:${e.bg};color:${e.tc}">${e.initials}</div>
+      <div class="en"><div class="ename">${e.name}</div><div class="erole">${e.role}</div></div>
+      <div class="eright">${bs}<div class="etime">${ti}</div>${r&&r.note?`<div class="enote">${r.note}</div>`:''}</div>
+    </div>`;
+  }).join('');
+}
+
+/* ─── Select ─── */
+function populateSel(){
+  const s=document.getElementById('esel');
+  s.innerHTML='<option value="">— select team member —</option>';
+  TEAM.forEach(e=>{
+    const o=document.createElement('option');
+    o.value=e.id; o.textContent=`${e.name} — ${e.role}`;
+    s.appendChild(o);
+  });
+}
+
+/* ─── Toast ─── */
+function showToast(msg,ok){
+  const t=document.getElementById('toast');
+  t.className='toast '+(ok?'tok':'terr');
+  t.textContent=msg; t.style.display='block';
+  setTimeout(()=>{t.style.display='none';},3500);
+}
+
+/* ─── Check In ─── */
+function doIn(){
+  const id=document.getElementById('esel').value;
+  if(!id){showToast('Please select a team member.',false);return;}
+  const emp=TEAM.find(e=>e.id===id);
+  const note=document.getElementById('ni').value.trim();
+  if(TODAY[id]&&TODAY[id].ci){showToast(`${emp.name} already checked in at ${TODAY[id].ci}.`,false);return;}
+  const t=nowHHMM();
+  const late=toMins(t)>LATE_MINS;
+  TODAY[id]={ci:t,co:null,note};
+  saveToday();
+  HIST.unshift({empId:id,name:emp.name,role:emp.role,date:todayISO(),checkIn:t,checkOut:null,note,late});
+  saveHist();
+  document.getElementById('ni').value='';
+  showToast(`${emp.name} checked in at ${t}.${late?' (Late)':''}`,true);
+  pushToSheets({action:'checkIn',empId:id,empName:emp.name,empRole:emp.role,time:t,note,date:todayISO()});
+  updateDash();
+  if(document.getElementById('s-rec').classList.contains('on')){renderRec();renderHist();}
+}
+
+/* ─── Check Out ─── */
+function doOut(){
+  const id=document.getElementById('esel').value;
+  if(!id){showToast('Please select a team member.',false);return;}
+  const emp=TEAM.find(e=>e.id===id);
+  if(!TODAY[id]||!TODAY[id].ci){showToast(`${emp.name} has not checked in yet.`,false);return;}
+  if(TODAY[id].co){showToast(`${emp.name} already checked out at ${TODAY[id].co}.`,false);return;}
+  const t=nowHHMM();
+  TODAY[id].co=t; saveToday();
+  const entry=HIST.find(h=>h.empId===id&&h.date===todayISO()&&!h.checkOut);
+  if(entry)entry.checkOut=t;
+  saveHist();
+  showToast(`${emp.name} checked out at ${t}.`,true);
+  pushToSheets({action:'checkOut',empId:id,empName:emp.name,empRole:emp.role,time:t,date:todayISO()});
+  updateDash();
+  if(document.getElementById('s-rec').classList.contains('on')){renderRec();renderHist();}
+}
+
+/* ─── Records ─── */
+let af='all';
+function setF(f,el){
+  af=f;
+  document.querySelectorAll('.fb').forEach(b=>b.classList.remove('on'));
+  el.classList.add('on'); renderRec();
+}
+
+function renderRec(){
+  const q=document.getElementById('rsq').value.toLowerCase();
+  const tbody=document.getElementById('rec-body');
+  const rows=TEAM.filter(e=>{
+    const match=e.name.toLowerCase().includes(q)||e.role.toLowerCase().includes(q);
+    const s=getStatus(e.id);
+    return match&&(af==='all'||s===af);
+  });
+  if(!rows.length){tbody.innerHTML=`<tr><td colspan="5"><div class="empty">No records match.</div></td></tr>`;return;}
+  tbody.innerHTML=rows.map(e=>{
+    const r=TODAY[e.id]; const s=getStatus(e.id);
+    return`<tr>
+      <td><div style="display:flex;align-items:center;gap:8px">
+        <div class="av" style="width:28px;height:28px;font-size:11px;background:${e.bg};color:${e.tc};border:none">${e.initials}</div>
+        <span style="font-weight:500;color:#2C2C2A">${e.name}</span>
+      </div></td>
+      <td style="color:#888780">${e.role}</td>
+      <td>${r&&r.ci?r.ci:'—'}</td>
+      <td>${r&&r.co?r.co:'—'}</td>
+      <td>${r&&r.co?badge('out'):badge(s)}</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderHist(){
+  const tbody=document.getElementById('hist-body');
+  const hc=document.getElementById('hist-count');
+  if(!HIST.length){
+    tbody.innerHTML=`<tr><td colspan="6"><div class="empty">No history yet.</div></td></tr>`;
+    if(hc)hc.textContent=''; return;
+  }
+  if(hc)hc.textContent=`${HIST.length} record${HIST.length!==1?'s':''}`;
+  tbody.innerHTML=HIST.map(e=>{
+    const[yy,mm,dd]=e.date.split('-');
+    const ds=`${dd}/${mm}/${yy}`;
+    const isToday=e.date===todayISO();
+    const s=e.checkOut?'out':(e.late?'late':(e.checkIn?'present':'absent'));
+    return`<tr>
+      <td><span style="font-size:12px;color:#2C2C2A">${ds}</span>${isToday?` <span class="tag-label tg-today">today</span>`:''}</td>
+      <td style="font-weight:500;color:#2C2C2A">${e.name}</td>
+      <td style="color:#888780;font-size:12px">${e.role}</td>
+      <td>${e.checkIn||'—'}</td>
+      <td>${e.checkOut||'—'}</td>
+      <td>${badge(s)}</td>
+    </tr>`;
+  }).join('');
+}
+
+/* ─── Clear today ─── */
+function clearToday(){
+  if(!confirm("Clear today's records?"))return;
+  TODAY={}; saveToday();
+  HIST=HIST.filter(h=>h.date!==todayISO()); saveHist();
+  updateDash(); renderRec(); renderHist();
+}
+
+/* ─── Tab switching ─── */
+function go(sec,el){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
+  document.getElementById('s-'+sec).classList.add('on');
+  el.classList.add('on');
+  if(sec==='rec'){renderRec();renderHist();}
+  if(sec==='dash'){fetchFromSheets();}
+}
+
+/* ─── Init ─── */
+populateSel();
+clock();
+updateDash();
+fetchFromSheets();
+setInterval(clock, 1000);
+setInterval(fetchFromSheets, 60000);
+</script>
+</body>
+</html>
