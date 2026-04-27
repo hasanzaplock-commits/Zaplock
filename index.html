@@ -73,13 +73,18 @@ table{width:100%;border-collapse:collapse;font-size:13px;table-layout:fixed}
 th{text-align:left;padding:10px 14px;font-size:11px;font-weight:500;color:#888780;text-transform:uppercase;letter-spacing:0.05em;border-bottom:0.5px solid #eef0f6;background:#f8f9fd}
 td{padding:11px 14px;border-bottom:0.5px solid #eef0f6;color:#2C2C2A}
 tr:last-child td{border-bottom:none}
+tr:hover td{background:#fafbff}
 .empty{text-align:center;padding:28px;color:#888780;font-size:13px}
 .clr-btn{padding:5px 14px;border-radius:8px;font-size:12px;cursor:pointer;border:1px solid #F7C1C1;background:#FCEBEB;color:#791F1F;font-family:inherit;font-weight:500}
 .section-gap{margin-top:18px}
 .tag-label{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:0.06em}
 .tg-today{background:#CECBF6;color:#3C3489}
+.tg-auto{background:#FAEEDA;color:#633806}
+.tg-weekend{background:#f0f4ff;color:#888780}
 .spinner{display:inline-block;width:12px;height:12px;border:2px solid #dde3f0;border-top-color:#185FA5;border-radius:50%;animation:spin 0.7s linear infinite;vertical-align:middle;margin-right:4px}
 @keyframes spin{to{transform:rotate(360deg)}}
+.weekend-notice{background:#f8f9fd;border:0.5px solid #dde3f0;border-radius:10px;padding:20px;text-align:center;color:#888780;font-size:13px}
+.weekend-notice strong{color:#5F5E5A;display:block;font-size:15px;margin-bottom:6px}
 </style>
 </head>
 <body>
@@ -117,10 +122,11 @@ tr:last-child td{border-bottom:none}
 
   <!-- DASHBOARD -->
   <div class="sec on" id="s-dash">
+    <div id="weekend-banner"></div>
     <div class="stats">
       <div class="sc sc-blue"><div class="sc-lbl">Team size</div><div class="sc-val" id="st-t">3</div><div class="sc-sub">total members</div></div>
       <div class="sc sc-green"><div class="sc-lbl">Present</div><div class="sc-val" id="st-p">0</div><div class="sc-sub">checked in today</div></div>
-      <div class="sc sc-red"><div class="sc-lbl">Absent</div><div class="sc-val" id="st-a">3</div><div class="sc-sub">not yet in</div></div>
+      <div class="sc sc-red"><div class="sc-lbl">Absent</div><div class="sc-val" id="st-a">—</div><div class="sc-sub">not checked in</div></div>
       <div class="sc sc-amber"><div class="sc-lbl">Late</div><div class="sc-val" id="st-l">0</div><div class="sc-sub">after 10:30 AM</div></div>
     </div>
     <div class="card">
@@ -134,27 +140,30 @@ tr:last-child td{border-bottom:none}
 
   <!-- MARK ATTENDANCE -->
   <div class="sec" id="s-mark">
-    <div class="hero">
-      <div class="hero-t" id="hc">00:00:00</div>
-      <div class="hero-d" id="hd"></div>
-      <div class="hero-info">
-        <div class="hi-item"><div class="hi-val">10:00 AM</div><div class="hi-lbl">Check-in time</div></div>
-        <div class="hi-item"><div class="hi-val">10:30 AM</div><div class="hi-lbl">Late after</div></div>
-        <div class="hi-item"><div class="hi-val">5:00 PM</div><div class="hi-lbl">Check-out time</div></div>
+    <div id="mark-weekend-notice"></div>
+    <div id="mark-form-wrap">
+      <div class="hero">
+        <div class="hero-t" id="hc">00:00:00</div>
+        <div class="hero-d" id="hd"></div>
+        <div class="hero-info">
+          <div class="hi-item"><div class="hi-val">10:00 AM</div><div class="hi-lbl">Check-in time</div></div>
+          <div class="hi-item"><div class="hi-val">10:30 AM</div><div class="hi-lbl">Late after</div></div>
+          <div class="hi-item"><div class="hi-val">5:00 PM</div><div class="hi-lbl">Check-out time</div></div>
+        </div>
       </div>
-    </div>
-    <div class="card">
-      <div class="ch">
-        <div class="ch-left"><div class="ch-dot" style="background:#EF9F27"></div><span class="ch-title">Mark attendance</span></div>
-        <span id="saving-lbl" style="font-size:12px;color:#888780;display:none"><span class="spinner"></span>Saving…</span>
-      </div>
-      <div class="cb">
-        <div id="toast" class="toast"></div>
-        <div class="ff"><label class="fl">Team member</label><select id="esel"></select></div>
-        <div class="ff"><label class="fl">Note (optional)</label><input type="text" id="ni" placeholder="e.g. Working remotely"/></div>
-        <div class="br">
-          <button class="btn btn-in" onclick="doIn()">Check In</button>
-          <button class="btn btn-out" onclick="doOut()">Check Out</button>
+      <div class="card">
+        <div class="ch">
+          <div class="ch-left"><div class="ch-dot" style="background:#EF9F27"></div><span class="ch-title">Mark attendance</span></div>
+          <span id="saving-lbl" style="font-size:12px;color:#888780;display:none"><span class="spinner"></span>Saving…</span>
+        </div>
+        <div class="cb">
+          <div id="toast" class="toast"></div>
+          <div class="ff"><label class="fl">Team member</label><select id="esel"></select></div>
+          <div class="ff"><label class="fl">Note (optional)</label><input type="text" id="ni" placeholder="e.g. Working remotely"/></div>
+          <div class="br">
+            <button class="btn btn-in" onclick="doIn()">Check In</button>
+            <button class="btn btn-out" onclick="doOut()">Check Out</button>
+          </div>
         </div>
       </div>
     </div>
@@ -188,7 +197,7 @@ tr:last-child td{border-bottom:none}
       </div>
       <div style="overflow-x:auto">
         <table>
-          <thead><tr><th style="width:18%">Date</th><th style="width:26%">Name</th><th style="width:18%">Role</th><th style="width:13%">In</th><th style="width:13%">Out</th><th style="width:12%">Status</th></tr></thead>
+          <thead><tr><th style="width:16%">Date</th><th style="width:14%">Day</th><th style="width:22%">Name</th><th style="width:14%">In</th><th style="width:14%">Out</th><th style="width:20%">Status</th></tr></thead>
           <tbody id="hist-body"></tbody>
         </table>
       </div>
@@ -198,20 +207,33 @@ tr:last-child td{border-bottom:none}
 </div>
 
 <script>
-/* ─── STEP 1: Paste your Apps Script Web App URL here after setup ─── */
+/* ── STEP 1: Paste your Apps Script URL here ── */
 const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbx67Ym0prhocIa72F2JTqFlP61PjWLlnB4airAsIdL3dxwNZ4TM-6uI3bodAqIGrPRJ/exec';
 
-/* ─── Team ─── */
+/* ── Team ── */
 const TEAM = [
-  {id:'mh', name:'Muhammad Hassan', role:'CEO',                initials:'MH', bg:'#185FA5', tc:'#fff'},
-  {id:'as', name:'Aqsa Sohail',     role:'COO',                initials:'AS', bg:'#993556', tc:'#fff'},
+  {id:'mh', name:'Muhammad Hassan', role:'CEO',                 initials:'MH', bg:'#185FA5', tc:'#fff'},
+  {id:'as', name:'Aqsa Sohail',     role:'COO',                 initials:'AS', bg:'#993556', tc:'#fff'},
   {id:'ms', name:'Mahnoor Shehzad', role:'CFO & Research Lead', initials:'MS', bg:'#0F6E56', tc:'#fff'},
 ];
 
-/* ─── Time rules ─── */
+/* ── Time rules ── */
 const LATE_MINS = 10*60+30; // 10:30 AM
 
-/* ─── localStorage helpers (30-day expiry) ─── */
+/* ── Weekend helpers ── */
+const DAY_NAMES = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+function isWeekend(dateStr){
+  const d = dateStr ? new Date(dateStr + 'T00:00:00') : new Date();
+  const day = d.getDay();
+  return day === 0 || day === 6;
+}
+function isWeekendToday(){ return isWeekend(); }
+function dayName(dateStr){
+  const d = new Date(dateStr + 'T00:00:00');
+  return DAY_NAMES[d.getDay()];
+}
+
+/* ── localStorage helpers (30-day expiry) ── */
 function lsGet(k){
   try{
     const raw=localStorage.getItem(k);
@@ -226,7 +248,7 @@ function lsSet(k,v,days){
 }
 
 const todayKey = () => 'zl_day_' + new Date().toISOString().slice(0,10);
-const HIST_KEY = 'zl_hist_v3';
+const HIST_KEY  = 'zl_hist_v4';
 
 let TODAY = lsGet(todayKey()) || {};
 let HIST  = lsGet(HIST_KEY)  || [];
@@ -234,7 +256,53 @@ let HIST  = lsGet(HIST_KEY)  || [];
 function saveToday(){ lsSet(todayKey(), TODAY, 1.5); }
 function saveHist() { lsSet(HIST_KEY,  HIST,  30);  }
 
-/* ─── Google Sheets sync ─── */
+/* ── Launch date — no absent records created before this date ── */
+const LAUNCH_DATE = '2026-04-27';
+
+/* ── Auto-absent: fill missing weekday records ──
+   Looks at weekdays from LAUNCH_DATE up to yesterday.
+   For every weekday where a team member has NO record, inserts an absent row.
+   Only runs client-side for display — also pushed to Sheets via Apps Script trigger.
+── */
+function buildAbsentRecords(records){
+  const today    = new Date().toISOString().slice(0,10);
+  const existing = new Set(records.map(r => r.date + '|' + r.empId));
+  const result   = [...records];
+
+  // go back 30 days but never before LAUNCH_DATE
+  for(let i = 0; i < 30; i++){
+    const d   = new Date();
+    d.setDate(d.getDate() - i);
+    const iso = d.toISOString().slice(0,10);
+    if(iso < LAUNCH_DATE) break;              // don't go before launch
+    if(isWeekend(iso)) continue;             // skip weekends
+    if(iso === today)  continue;             // today handled live
+
+    TEAM.forEach(emp => {
+      if(!existing.has(iso + '|' + emp.id)){
+        result.push({
+          date:     iso,
+          empId:    emp.id,
+          name:     emp.name,
+          empName:  emp.name,
+          role:     emp.role,
+          empRole:  emp.role,
+          checkIn:  null,
+          checkOut: null,
+          note:     'Auto-marked absent',
+          late:     false,
+          absent:   true,
+        });
+      }
+    });
+  }
+
+  // sort newest first
+  result.sort((a,b) => b.date.localeCompare(a.date) || a.name.localeCompare(b.name));
+  return result;
+}
+
+/* ── Google Sheets sync ── */
 const sheetsReady = () => SHEETS_URL && SHEETS_URL !== 'YOUR_APPS_SCRIPT_URL_HERE';
 
 function showSyncPill(label, ok){
@@ -250,8 +318,7 @@ async function pushToSheets(payload){
   if(!sheetsReady()) return;
   document.getElementById('saving-lbl').style.display = 'inline';
   try{
-    const qs = new URLSearchParams(payload).toString();
-    await fetch(SHEETS_URL + '?' + qs, {method:'GET', mode:'no-cors'});
+    await fetch(SHEETS_URL + '?' + new URLSearchParams(payload).toString(), {method:'GET', mode:'no-cors'});
     showSyncPill('Saved to Sheets', true);
   }catch{
     showSyncPill('Sync error', false);
@@ -267,74 +334,102 @@ async function fetchFromSheets(){
     const res  = await fetch(SHEETS_URL + '?action=getAll');
     const data = await res.json();
     if(data && data.records){
-      HIST = data.records;
+      HIST = buildAbsentRecords(data.records);
       saveHist();
       const tod = new Date().toISOString().slice(0,10);
       TODAY = {};
-      data.records.filter(r=>r.date===tod).forEach(r=>{
-        TODAY[r.empId] = {ci:r.checkIn, co:r.checkOut||null, note:r.note||''};
+      data.records.filter(r => r.date === tod && !r.absent).forEach(r => {
+        TODAY[r.empId] = {ci: r.checkIn, co: r.checkOut||null, note: r.note||''};
       });
       saveToday();
       updateDash();
-      if(document.getElementById('s-rec').classList.contains('on')){renderRec();renderHist();}
+      if(document.getElementById('s-rec').classList.contains('on')){ renderRec(); renderHist(); }
     }
     showSyncPill('Synced', true);
   }catch{
-    showSyncPill('Offline — local data shown', false);
+    // fallback: build absent records from local history
+    HIST = buildAbsentRecords(HIST.filter(h => !h.absent));
+    showSyncPill('Offline — local data', false);
   }
 }
 
-/* ─── Helpers ─── */
+/* ── Helpers ── */
 function todayISO(){ return new Date().toISOString().slice(0,10); }
 function nowHHMM() { return new Date().toTimeString().slice(0,5); }
 function toMins(hhmm){ const[h,m]=hhmm.split(':').map(Number); return h*60+m; }
 
 function getStatus(id){
-  const r=TODAY[id];
-  if(!r||!r.ci) return 'absent';
+  const r = TODAY[id];
+  if(!r || !r.ci) return isWeekendToday() ? 'weekend' : 'absent';
   return toMins(r.ci) > LATE_MINS ? 'late' : 'present';
 }
 
 function badge(s){
-  const m={
-    present:`<span class="badge b-p"><span class="dot6 dg"></span>Present</span>`,
-    absent: `<span class="badge b-a"><span class="dot6 dr"></span>Absent</span>`,
-    late:   `<span class="badge b-l"><span class="dot6 da"></span>Late</span>`,
-    out:    `<span class="badge b-o"><span class="dot6 db"></span>Checked out</span>`,
+  const m = {
+    present: `<span class="badge b-p"><span class="dot6 dg"></span>Present</span>`,
+    absent:  `<span class="badge b-a"><span class="dot6 dr"></span>Absent</span>`,
+    late:    `<span class="badge b-l"><span class="dot6 da"></span>Late</span>`,
+    out:     `<span class="badge b-o"><span class="dot6 db"></span>Checked out</span>`,
+    weekend: `<span class="badge" style="background:#f0f4ff;color:#888780;border:0.5px solid #dde3f0"><span class="dot6" style="background:#888780"></span>Weekend</span>`,
   };
-  return m[s]||m.absent;
+  return m[s] || m.absent;
 }
 
-/* ─── Clock ─── */
+/* ── Clock ── */
 function clock(){
-  const n=new Date();
-  const t=n.toTimeString().slice(0,8);
-  const d=n.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-  ['tc','hc'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=t;});
-  ['td','hd'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=d;});
-  const dm=document.getElementById('dash-d');
-  if(dm)dm.textContent=n.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
-  const rl=document.getElementById('rec-today-lbl');
-  if(rl)rl.textContent=n.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+  const n = new Date();
+  const t = n.toTimeString().slice(0,8);
+  const d = n.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  ['tc','hc'].forEach(id=>{ const e=document.getElementById(id); if(e) e.textContent=t; });
+  ['td','hd'].forEach(id=>{ const e=document.getElementById(id); if(e) e.textContent=d; });
+  const dm=document.getElementById('dash-d'); if(dm) dm.textContent=n.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+  const rl=document.getElementById('rec-today-lbl'); if(rl) rl.textContent=n.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
 }
 
-/* ─── Dashboard ─── */
+/* ── Weekend UI handling ── */
+function applyWeekendUI(){
+  const wb = document.getElementById('weekend-banner');
+  const mw = document.getElementById('mark-weekend-notice');
+  const mf = document.getElementById('mark-form-wrap');
+  if(isWeekendToday()){
+    const todayName = DAY_NAMES[new Date().getDay()];
+    const msg = `<div class="weekend-notice"><strong>🎉 It's ${todayName}!</strong>No attendance required. Enjoy your weekend — records only track Monday to Friday.</div>`;
+    if(wb) wb.innerHTML = msg;
+    if(mw) mw.innerHTML = msg;
+    if(mf) mf.style.display = 'none';
+  } else {
+    if(wb) wb.innerHTML = '';
+    if(mw) mw.innerHTML = '';
+    if(mf) mf.style.display = 'block';
+  }
+}
+
+/* ── Dashboard ── */
 function updateDash(){
-  let p=0,l=0;
+  applyWeekendUI();
+  if(isWeekendToday()){
+    document.getElementById('st-p').textContent = '—';
+    document.getElementById('st-a').textContent = '—';
+    document.getElementById('st-l').textContent = '—';
+    document.getElementById('dash-list').innerHTML = '';
+    return;
+  }
+  let p=0, l=0;
   TEAM.forEach(e=>{
     const s=getStatus(e.id);
-    if(s==='present')p++;
-    if(s==='late'){p++;l++;}
+    if(s==='present') p++;
+    if(s==='late')    { p++; l++; }
   });
-  document.getElementById('st-p').textContent=p;
-  document.getElementById('st-a').textContent=TEAM.length-p;
-  document.getElementById('st-l').textContent=l;
+  document.getElementById('st-p').textContent = p;
+  document.getElementById('st-a').textContent = TEAM.length - p;
+  document.getElementById('st-l').textContent = l;
 
-  document.getElementById('dash-list').innerHTML=TEAM.map(e=>{
-    const r=TODAY[e.id]; const s=getStatus(e.id);
-    const bs=r&&r.co?badge('out'):badge(s);
-    const ti=r&&r.ci?`In: ${r.ci}${r.co?' · Out: '+r.co:''}`:'Not yet checked in';
-    return`<div class="emp-row">
+  document.getElementById('dash-list').innerHTML = TEAM.map(e=>{
+    const r  = TODAY[e.id];
+    const s  = getStatus(e.id);
+    const bs = r && r.co ? badge('out') : badge(s);
+    const ti = r && r.ci ? `In: ${r.ci}${r.co ? ' · Out: '+r.co : ''}` : 'Not yet checked in';
+    return `<div class="emp-row">
       <div class="av" style="background:${e.bg};color:${e.tc}">${e.initials}</div>
       <div class="en"><div class="ename">${e.name}</div><div class="erole">${e.role}</div></div>
       <div class="eright">${bs}<div class="etime">${ti}</div>${r&&r.note?`<div class="enote">${r.note}</div>`:''}</div>
@@ -342,138 +437,174 @@ function updateDash(){
   }).join('');
 }
 
-/* ─── Select ─── */
+/* ── Select ── */
 function populateSel(){
-  const s=document.getElementById('esel');
-  s.innerHTML='<option value="">— select team member —</option>';
+  const s = document.getElementById('esel');
+  s.innerHTML = '<option value="">— select team member —</option>';
   TEAM.forEach(e=>{
-    const o=document.createElement('option');
-    o.value=e.id; o.textContent=`${e.name} — ${e.role}`;
+    const o = document.createElement('option');
+    o.value = e.id;
+    o.textContent = `${e.name} — ${e.role}`;
     s.appendChild(o);
   });
 }
 
-/* ─── Toast ─── */
-function showToast(msg,ok){
-  const t=document.getElementById('toast');
-  t.className='toast '+(ok?'tok':'terr');
-  t.textContent=msg; t.style.display='block';
-  setTimeout(()=>{t.style.display='none';},3500);
+/* ── Toast ── */
+function showToast(msg, ok){
+  const t = document.getElementById('toast');
+  t.className = 'toast ' + (ok ? 'tok' : 'terr');
+  t.textContent = msg;
+  t.style.display = 'block';
+  setTimeout(()=>{ t.style.display='none'; }, 3500);
 }
 
-/* ─── Check In ─── */
+/* ── Check In ── */
 function doIn(){
-  const id=document.getElementById('esel').value;
-  if(!id){showToast('Please select a team member.',false);return;}
-  const emp=TEAM.find(e=>e.id===id);
-  const note=document.getElementById('ni').value.trim();
-  if(TODAY[id]&&TODAY[id].ci){showToast(`${emp.name} already checked in at ${TODAY[id].ci}.`,false);return;}
-  const t=nowHHMM();
-  const late=toMins(t)>LATE_MINS;
-  TODAY[id]={ci:t,co:null,note};
+  if(isWeekendToday()){ showToast('No attendance on weekends.', false); return; }
+  const id  = document.getElementById('esel').value;
+  if(!id){ showToast('Please select a team member.', false); return; }
+  const emp  = TEAM.find(e=>e.id===id);
+  const note = document.getElementById('ni').value.trim();
+  if(TODAY[id]&&TODAY[id].ci){ showToast(`${emp.name} already checked in at ${TODAY[id].ci}.`, false); return; }
+  const t    = nowHHMM();
+  const late = toMins(t) > LATE_MINS;
+  TODAY[id]  = {ci:t, co:null, note};
   saveToday();
-  HIST.unshift({empId:id,name:emp.name,role:emp.role,date:todayISO(),checkIn:t,checkOut:null,note,late});
+  HIST.unshift({empId:id, name:emp.name, empName:emp.name, role:emp.role, empRole:emp.role, date:todayISO(), checkIn:t, checkOut:null, note, late, absent:false});
   saveHist();
-  document.getElementById('ni').value='';
-  showToast(`${emp.name} checked in at ${t}.${late?' (Late)':''}`,true);
-  pushToSheets({action:'checkIn',empId:id,empName:emp.name,empRole:emp.role,time:t,note,date:todayISO()});
+  document.getElementById('ni').value = '';
+  showToast(`${emp.name} checked in at ${t}.${late?' (Late)':''}`, true);
+  pushToSheets({action:'checkIn', empId:id, empName:emp.name, empRole:emp.role, time:t, note, date:todayISO()});
   updateDash();
-  if(document.getElementById('s-rec').classList.contains('on')){renderRec();renderHist();}
+  if(document.getElementById('s-rec').classList.contains('on')){ renderRec(); renderHist(); }
 }
 
-/* ─── Check Out ─── */
+/* ── Check Out ── */
 function doOut(){
-  const id=document.getElementById('esel').value;
-  if(!id){showToast('Please select a team member.',false);return;}
-  const emp=TEAM.find(e=>e.id===id);
-  if(!TODAY[id]||!TODAY[id].ci){showToast(`${emp.name} has not checked in yet.`,false);return;}
-  if(TODAY[id].co){showToast(`${emp.name} already checked out at ${TODAY[id].co}.`,false);return;}
-  const t=nowHHMM();
-  TODAY[id].co=t; saveToday();
-  const entry=HIST.find(h=>h.empId===id&&h.date===todayISO()&&!h.checkOut);
-  if(entry)entry.checkOut=t;
+  if(isWeekendToday()){ showToast('No attendance on weekends.', false); return; }
+  const id  = document.getElementById('esel').value;
+  if(!id){ showToast('Please select a team member.', false); return; }
+  const emp = TEAM.find(e=>e.id===id);
+  if(!TODAY[id]||!TODAY[id].ci){ showToast(`${emp.name} has not checked in yet.`, false); return; }
+  if(TODAY[id].co){ showToast(`${emp.name} already checked out at ${TODAY[id].co}.`, false); return; }
+  const t       = nowHHMM();
+  TODAY[id].co  = t;
+  saveToday();
+  const entry   = HIST.find(h=>h.empId===id && h.date===todayISO() && !h.checkOut);
+  if(entry) entry.checkOut = t;
   saveHist();
-  showToast(`${emp.name} checked out at ${t}.`,true);
-  pushToSheets({action:'checkOut',empId:id,empName:emp.name,empRole:emp.role,time:t,date:todayISO()});
+  showToast(`${emp.name} checked out at ${t}.`, true);
+  pushToSheets({action:'checkOut', empId:id, empName:emp.name, empRole:emp.role, time:t, date:todayISO()});
   updateDash();
-  if(document.getElementById('s-rec').classList.contains('on')){renderRec();renderHist();}
+  if(document.getElementById('s-rec').classList.contains('on')){ renderRec(); renderHist(); }
 }
 
-/* ─── Records ─── */
-let af='all';
-function setF(f,el){
-  af=f;
+/* ── Records ── */
+let af = 'all';
+function setF(f, el){
+  af = f;
   document.querySelectorAll('.fb').forEach(b=>b.classList.remove('on'));
-  el.classList.add('on'); renderRec();
+  el.classList.add('on');
+  renderRec();
 }
 
 function renderRec(){
-  const q=document.getElementById('rsq').value.toLowerCase();
-  const tbody=document.getElementById('rec-body');
-  const rows=TEAM.filter(e=>{
-    const match=e.name.toLowerCase().includes(q)||e.role.toLowerCase().includes(q);
-    const s=getStatus(e.id);
-    return match&&(af==='all'||s===af);
+  const q     = document.getElementById('rsq').value.toLowerCase();
+  const tbody = document.getElementById('rec-body');
+  const today = isWeekendToday();
+
+  if(today){
+    tbody.innerHTML = `<tr><td colspan="5"><div class="empty">Weekend — no attendance tracked today.</div></td></tr>`;
+    return;
+  }
+
+  const rows = TEAM.filter(e=>{
+    const match = e.name.toLowerCase().includes(q) || e.role.toLowerCase().includes(q);
+    const s     = getStatus(e.id);
+    return match && (af==='all' || s===af);
   });
-  if(!rows.length){tbody.innerHTML=`<tr><td colspan="5"><div class="empty">No records match.</div></td></tr>`;return;}
-  tbody.innerHTML=rows.map(e=>{
-    const r=TODAY[e.id]; const s=getStatus(e.id);
-    return`<tr>
+  if(!rows.length){ tbody.innerHTML=`<tr><td colspan="5"><div class="empty">No records match.</div></td></tr>`; return; }
+  tbody.innerHTML = rows.map(e=>{
+    const r = TODAY[e.id];
+    const s = getStatus(e.id);
+    return `<tr>
       <td><div style="display:flex;align-items:center;gap:8px">
         <div class="av" style="width:28px;height:28px;font-size:11px;background:${e.bg};color:${e.tc};border:none">${e.initials}</div>
         <span style="font-weight:500;color:#2C2C2A">${e.name}</span>
       </div></td>
       <td style="color:#888780">${e.role}</td>
-      <td>${r&&r.ci?r.ci:'—'}</td>
-      <td>${r&&r.co?r.co:'—'}</td>
-      <td>${r&&r.co?badge('out'):badge(s)}</td>
+      <td>${r&&r.ci ? r.ci : '—'}</td>
+      <td>${r&&r.co ? r.co : '—'}</td>
+      <td>${r&&r.co ? badge('out') : badge(s)}</td>
     </tr>`;
   }).join('');
 }
 
 function renderHist(){
-  const tbody=document.getElementById('hist-body');
-  const hc=document.getElementById('hist-count');
-  if(!HIST.length){
-    tbody.innerHTML=`<tr><td colspan="6"><div class="empty">No history yet.</div></td></tr>`;
-    if(hc)hc.textContent=''; return;
+  const tbody = document.getElementById('hist-body');
+  const hc    = document.getElementById('hist-count');
+  const q     = document.getElementById('rsq').value.toLowerCase();
+
+  // filter by search + active filter (excluding weekend rows — they never exist)
+  const filtered = HIST.filter(r=>{
+    const matchQ  = r.name.toLowerCase().includes(q) || (r.role||'').toLowerCase().includes(q);
+    if(af === 'all')     return matchQ;
+    if(af === 'absent')  return matchQ && r.absent;
+    if(af === 'late')    return matchQ && r.late && !r.absent;
+    if(af === 'present') return matchQ && !r.absent && !r.late;
+    return matchQ;
+  });
+
+  if(!filtered.length){
+    tbody.innerHTML=`<tr><td colspan="6"><div class="empty">No history records found.</div></td></tr>`;
+    if(hc) hc.textContent=''; return;
   }
-  if(hc)hc.textContent=`${HIST.length} record${HIST.length!==1?'s':''}`;
-  tbody.innerHTML=HIST.map(e=>{
-    const[yy,mm,dd]=e.date.split('-');
-    const ds=`${dd}/${mm}/${yy}`;
-    const isToday=e.date===todayISO();
-    const s=e.checkOut?'out':(e.late?'late':(e.checkIn?'present':'absent'));
-    return`<tr>
-      <td><span style="font-size:12px;color:#2C2C2A">${ds}</span>${isToday?` <span class="tag-label tg-today">today</span>`:''}</td>
-      <td style="font-weight:500;color:#2C2C2A">${e.name}</td>
-      <td style="color:#888780;font-size:12px">${e.role}</td>
-      <td>${e.checkIn||'—'}</td>
-      <td>${e.checkOut||'—'}</td>
+  if(hc) hc.textContent=`${filtered.length} record${filtered.length!==1?'s':''}`;
+
+  tbody.innerHTML = filtered.map(r=>{
+    const [yy,mm,dd] = r.date.split('-');
+    const ds         = `${dd}/${mm}/${yy}`;
+    const isToday    = r.date === todayISO();
+    const dn         = dayName(r.date);
+    const s          = r.checkOut ? 'out' : (r.absent ? 'absent' : (r.late ? 'late' : (r.checkIn ? 'present' : 'absent')));
+    const autoTag    = r.absent ? ` <span class="tag-label tg-auto">auto</span>` : '';
+    const todayTag   = isToday  ? ` <span class="tag-label tg-today">today</span>` : '';
+    return `<tr>
+      <td><span style="font-size:12px;color:#2C2C2A">${ds}</span>${todayTag}${autoTag}</td>
+      <td style="color:#888780;font-size:12px">${dn}</td>
+      <td style="font-weight:500;color:#2C2C2A">${r.name}</td>
+      <td>${r.checkIn  || '—'}</td>
+      <td>${r.checkOut || '—'}</td>
       <td>${badge(s)}</td>
     </tr>`;
   }).join('');
 }
 
-/* ─── Clear today ─── */
+/* ── Clear today ── */
 function clearToday(){
-  if(!confirm("Clear today's records?"))return;
-  TODAY={}; saveToday();
-  HIST=HIST.filter(h=>h.date!==todayISO()); saveHist();
-  updateDash(); renderRec(); renderHist();
+  if(!confirm("Clear today's records?")) return;
+  TODAY = {};
+  saveToday();
+  HIST  = HIST.filter(h => h.date !== todayISO());
+  HIST  = buildAbsentRecords(HIST.filter(h => !h.absent));
+  saveHist();
+  updateDash();
+  renderRec();
+  renderHist();
 }
 
-/* ─── Tab switching ─── */
-function go(sec,el){
+/* ── Tab switching ── */
+function go(sec, el){
   document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
   document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
   document.getElementById('s-'+sec).classList.add('on');
   el.classList.add('on');
-  if(sec==='rec'){renderRec();renderHist();}
-  if(sec==='dash'){fetchFromSheets();}
+  if(sec==='rec')  { renderRec(); renderHist(); }
+  if(sec==='dash') { fetchFromSheets(); }
+  if(sec==='mark') { applyWeekendUI(); }
 }
 
-/* ─── Init ─── */
+/* ── Init ── */
 populateSel();
 clock();
 updateDash();
