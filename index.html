@@ -7,6 +7,8 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:system-ui,-apple-system,sans-serif;background:#f0f4ff}
+
+/* ── Topbar ── */
 .topbar{background:#185FA5;display:flex;align-items:center;gap:14px;padding:14px 22px}
 .zlogo{width:42px;height:42px;background:#0C447C;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .brand{color:#fff;font-size:17px;font-weight:500;letter-spacing:-0.3px}
@@ -17,23 +19,33 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f4ff}
 .sync-pill{display:flex;align-items:center;gap:6px;background:rgba(0,0,0,0.2);border-radius:20px;padding:4px 12px;font-size:11px;color:#B5D4F4;margin-right:4px}
 .sync-dot{width:6px;height:6px;border-radius:50%;background:#4ADE80}
 .sync-dot.warn{background:#FCD34D}
+
+/* ── Nav ── */
 .nav{background:#0C447C;display:flex;padding:0 22px;gap:2px}
 .nb{padding:11px 18px;font-size:13px;border:none;background:none;cursor:pointer;color:#B5D4F4;border-bottom:3px solid transparent;font-family:inherit;font-weight:500}
 .nb.on{color:#fff;border-bottom:3px solid #EF9F27}
+
+/* ── Layout ── */
 .page{padding:20px}
 .sec{display:none}.sec.on{display:block}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+
+/* ── Dashboard stats ── */
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px}
 .sc{border-radius:12px;padding:16px 18px;border:none}
-.sc-blue{background:#185FA5}.sc-green{background:#3B6D11}.sc-red{background:#A32D2D}.sc-amber{background:#854F0B}
+.sc-blue{background:#185FA5}.sc-green{background:#3B6D11}.sc-red{background:#A32D2D}.sc-amber{background:#854F0B}.sc-purple{background:#4B3B8C}
 .sc-lbl{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.06em;color:rgba(255,255,255,0.72);margin-bottom:8px}
 .sc-val{font-size:30px;font-weight:500;color:#fff}
 .sc-sub{font-size:11px;color:rgba(255,255,255,0.6);margin-top:4px}
+
+/* ── Cards ── */
 .card{background:#fff;border-radius:12px;border:0.5px solid #dde3f0;overflow:hidden;margin-bottom:16px}
 .ch{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:0.5px solid #eef0f6}
 .ch-left{display:flex;align-items:center;gap:10px}
 .ch-dot{width:8px;height:8px;border-radius:50%;background:#185FA5}
 .ch-title{font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:0.06em;color:#5F5E5A}
 .ch-meta{font-size:12px;color:#888780}
+
+/* ── Employee rows ── */
 .emp-row{display:flex;align-items:center;gap:14px;padding:14px 18px;border-bottom:0.5px solid #eef0f6}
 .emp-row:last-child{border-bottom:none}
 .av{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;flex-shrink:0;border:2px solid rgba(255,255,255,0.6)}
@@ -43,32 +55,85 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f4ff}
 .eright{text-align:right}
 .etime{font-size:11px;color:#888780;margin-top:4px}
 .enote{font-size:11px;color:#B4B2A9;margin-top:2px}
+
+/* ── Badges ── */
 .badge{display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:20px;font-size:11px;font-weight:500}
-.b-p{background:#EAF3DE;color:#27500A}.b-a{background:#FCEBEB;color:#791F1F}.b-l{background:#FAEEDA;color:#633806}.b-o{background:#E6F1FB;color:#0C447C}
+.b-p{background:#EAF3DE;color:#27500A}
+.b-a{background:#FCEBEB;color:#791F1F}
+.b-l{background:#FAEEDA;color:#633806}
+.b-o{background:#E6F1FB;color:#0C447C}
+.b-leave{background:#F3E8FF;color:#5B21B6}
+.b-home{background:#E0F2FE;color:#0369A1}
+.b-hybrid{background:#FEF3C7;color:#92400E}
+.b-office{background:#DCFCE7;color:#166534}
+.b-auto{background:#FFF7ED;color:#C2410C;border:1px dashed #FED7AA}
 .dot6{width:6px;height:6px;border-radius:50%;display:inline-block}
-.dg{background:#639922}.dr{background:#E24B4A}.da{background:#EF9F27}.db{background:#378ADD}
-.hero{background:#185FA5;border-radius:12px;padding:24px;text-align:center;margin-bottom:18px}
+.dg{background:#639922}.dr{background:#E24B4A}.da{background:#EF9F27}.db{background:#378ADD}.dp{background:#7C3AED}
+
+/* ── Hero clock ── */
+.hero{background:linear-gradient(135deg,#185FA5 0%,#0C447C 100%);border-radius:12px;padding:24px;text-align:center;margin-bottom:18px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-30px;right:-30px;width:120px;height:120px;background:rgba(255,255,255,0.05);border-radius:50%}
 .hero-t{font-size:42px;font-weight:500;color:#fff;letter-spacing:3px}
 .hero-d{font-size:13px;color:#B5D4F4;margin-top:6px}
 .hero-info{display:flex;justify-content:center;gap:24px;margin-top:14px}
 .hi-item{text-align:center}
 .hi-val{font-size:13px;font-weight:500;color:#fff}
 .hi-lbl{font-size:11px;color:#B5D4F4;margin-top:2px}
+
+/* ── Form elements ── */
 .fl{font-size:12px;font-weight:500;color:#5F5E5A;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px;display:block}
-select,input[type=text]{width:100%;padding:9px 12px;font-size:14px;border:1px solid #dde3f0;border-radius:8px;background:#fff;color:#2C2C2A;font-family:inherit}
+select,input[type=text],textarea{width:100%;padding:9px 12px;font-size:14px;border:1px solid #dde3f0;border-radius:8px;background:#fff;color:#2C2C2A;font-family:inherit}
+textarea{resize:vertical;min-height:70px;line-height:1.5}
 .cb{padding:18px}
 .ff{margin-bottom:14px}
+
+/* ── Work mode selector ── */
+.mode-btns{display:flex;gap:8px;margin-top:6px}
+.mode-btn{flex:1;padding:10px 8px;border-radius:8px;font-size:13px;cursor:pointer;font-family:inherit;border:1.5px solid #dde3f0;background:#f8f9fd;color:#5F5E5A;font-weight:500;transition:all 0.15s;text-align:center}
+.mode-btn:hover{border-color:#185FA5;color:#185FA5;background:#EBF3FB}
+.mode-btn.sel-office{border-color:#166534;background:#DCFCE7;color:#166534}
+.mode-btn.sel-home{border-color:#0369A1;background:#E0F2FE;color:#0369A1}
+.mode-btn.sel-hybrid{border-color:#92400E;background:#FEF3C7;color:#92400E}
+.mode-icon{font-size:18px;display:block;margin-bottom:4px}
+
+/* ── Action buttons ── */
 .br{display:flex;gap:10px;margin-top:6px}
-.btn{flex:1;padding:11px;border-radius:8px;font-size:14px;cursor:pointer;font-family:inherit;border:none;font-weight:500}
-.btn-in{background:#185FA5;color:#fff}.btn-out{background:#A32D2D;color:#fff}
+.btn{flex:1;padding:11px;border-radius:8px;font-size:14px;cursor:pointer;font-family:inherit;border:none;font-weight:500;transition:opacity 0.15s}
+.btn-in{background:#185FA5;color:#fff}
+.btn-out{background:#A32D2D;color:#fff}
+.btn-leave{background:#5B21B6;color:#fff}
+.btn-manual{background:#854F0B;color:#fff}
 .btn:active{transform:scale(0.98)}
+.btn:hover{opacity:0.9}
+
+/* ── Manual time input ── */
+.manual-time-wrap{display:none;margin-top:14px;padding:14px;background:#FFF7ED;border-radius:8px;border:1px solid #FED7AA}
+.manual-time-wrap.open{display:block}
+.manual-hint{font-size:11px;color:#92400E;margin-bottom:10px;font-style:italic}
+.time-row{display:flex;gap:10px}
+.time-row input[type=time]{flex:1;padding:9px 12px;font-size:14px;border:1px solid #FED7AA;border-radius:8px;background:#fff;color:#2C2C2A;font-family:inherit}
+.time-label{font-size:12px;font-weight:500;color:#92400E;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px;display:block}
+.btn-apply-manual{width:100%;margin-top:10px;padding:9px;border-radius:8px;font-size:13px;cursor:pointer;font-family:inherit;border:none;font-weight:500;background:#854F0B;color:#fff}
+
+/* ── Leave form ── */
+.leave-form-wrap{display:none;margin-top:14px;padding:14px;background:#F5F3FF;border-radius:8px;border:1px solid #DDD6FE}
+.leave-form-wrap.open{display:block}
+.leave-hint{font-size:11px;color:#5B21B6;margin-bottom:10px;font-style:italic}
+.btn-submit-leave{width:100%;margin-top:10px;padding:9px;border-radius:8px;font-size:13px;cursor:pointer;font-family:inherit;border:none;font-weight:500;background:#5B21B6;color:#fff}
+
+/* ── Toast ── */
 .toast{padding:10px 14px;border-radius:8px;font-size:13px;margin-bottom:14px;display:none;font-weight:500}
 .tok{background:#EAF3DE;color:#27500A;border:0.5px solid #C0DD97}
 .terr{background:#FCEBEB;color:#791F1F;border:0.5px solid #F7C1C1}
+.tinfo{background:#FFF7ED;color:#92400E;border:0.5px solid #FED7AA}
+
+/* ── Records controls ── */
 .rctrl{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center}
 .rs{flex:1;min-width:160px;padding:8px 12px;font-size:13px;border:1px solid #dde3f0;border-radius:8px;background:#fff;color:#2C2C2A;font-family:inherit}
 .fb{padding:5px 14px;border-radius:20px;font-size:12px;cursor:pointer;border:1px solid #dde3f0;background:#fff;color:#5F5E5A;font-family:inherit;font-weight:500}
 .fb.on{background:#185FA5;color:#fff;border-color:#185FA5}
+
+/* ── Table ── */
 table{width:100%;border-collapse:collapse;font-size:13px;table-layout:fixed}
 th{text-align:left;padding:10px 14px;font-size:11px;font-weight:500;color:#888780;text-transform:uppercase;letter-spacing:0.05em;border-bottom:0.5px solid #eef0f6;background:#f8f9fd}
 td{padding:11px 14px;border-bottom:0.5px solid #eef0f6;color:#2C2C2A}
@@ -77,14 +142,54 @@ tr:hover td{background:#fafbff}
 .empty{text-align:center;padding:28px;color:#888780;font-size:13px}
 .clr-btn{padding:5px 14px;border-radius:8px;font-size:12px;cursor:pointer;border:1px solid #F7C1C1;background:#FCEBEB;color:#791F1F;font-family:inherit;font-weight:500}
 .section-gap{margin-top:18px}
+
+/* ── Tags ── */
 .tag-label{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:0.06em}
 .tg-today{background:#CECBF6;color:#3C3489}
 .tg-auto{background:#FAEEDA;color:#633806}
 .tg-weekend{background:#f0f4ff;color:#888780}
+.tg-manual{background:#FFF7ED;color:#C2410C}
+.tg-leave{background:#F3E8FF;color:#5B21B6}
+.tg-autoout{background:#FEE2E2;color:#991B1B}
+
+/* ── Spinner ── */
 .spinner{display:inline-block;width:12px;height:12px;border:2px solid #dde3f0;border-top-color:#185FA5;border-radius:50%;animation:spin 0.7s linear infinite;vertical-align:middle;margin-right:4px}
 @keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── Weekend notice ── */
 .weekend-notice{background:#f8f9fd;border:0.5px solid #dde3f0;border-radius:10px;padding:20px;text-align:center;color:#888780;font-size:13px}
 .weekend-notice strong{color:#5F5E5A;display:block;font-size:15px;margin-bottom:6px}
+
+/* ── Dashboard analytics ── */
+.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.analytics-card{background:#fff;border-radius:12px;border:0.5px solid #dde3f0;overflow:hidden}
+.mini-bar-wrap{padding:14px 18px}
+.mini-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.mini-bar-row:last-child{margin-bottom:0}
+.mini-bar-name{font-size:12px;color:#2C2C2A;width:80px;flex-shrink:0;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mini-bar-track{flex:1;height:8px;background:#f0f4ff;border-radius:4px;overflow:hidden}
+.mini-bar-fill{height:100%;border-radius:4px;background:#185FA5;transition:width 0.5s ease}
+.mini-bar-pct{font-size:11px;color:#888780;width:36px;text-align:right;flex-shrink:0}
+.week-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;padding:14px 18px}
+.day-cell{text-align:center}
+.day-label{font-size:10px;color:#888780;margin-bottom:6px;font-weight:500;text-transform:uppercase}
+.day-dot-row{display:flex;flex-direction:column;gap:3px}
+.ddot{width:100%;height:8px;border-radius:3px}
+.ddot.present{background:#639922}
+.ddot.absent{background:#E24B4A}
+.ddot.late{background:#EF9F27}
+.ddot.leave{background:#7C3AED}
+.ddot.none{background:#e8ecf4}
+.week-legend{display:flex;gap:12px;padding:0 18px 12px;flex-wrap:wrap}
+.wl-item{display:flex;align-items:center;gap:5px;font-size:11px;color:#888780}
+.wl-dot{width:10px;height:10px;border-radius:2px}
+
+/* ── Auto-checkout banner ── */
+.auto-checkout-banner{background:#FFF7ED;border:0.5px solid #FED7AA;border-radius:10px;padding:12px 18px;display:flex;align-items:center;gap:10px;margin-bottom:16px;font-size:13px;color:#92400E}
+.auto-checkout-banner svg{flex-shrink:0}
+
+/* ── Saving label ── */
+#saving-lbl{font-size:12px;color:#888780;display:none}
 </style>
 </head>
 <body>
@@ -123,12 +228,37 @@ tr:hover td{background:#fafbff}
   <!-- DASHBOARD -->
   <div class="sec on" id="s-dash">
     <div id="weekend-banner"></div>
+    <div id="autoout-banner" class="auto-checkout-banner" style="display:none">
+      <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="#EF9F27" stroke-width="1.8"/><path d="M12 7v5l3 3" stroke="#EF9F27" stroke-width="1.8" stroke-linecap="round"/></svg>
+      <span id="autoout-msg">Auto-checkout active after 8:00 PM</span>
+    </div>
+
     <div class="stats">
       <div class="sc sc-blue"><div class="sc-lbl">Team size</div><div class="sc-val" id="st-t">3</div><div class="sc-sub">total members</div></div>
       <div class="sc sc-green"><div class="sc-lbl">Present</div><div class="sc-val" id="st-p">0</div><div class="sc-sub">checked in today</div></div>
       <div class="sc sc-red"><div class="sc-lbl">Absent</div><div class="sc-val" id="st-a">—</div><div class="sc-sub">not checked in</div></div>
-      <div class="sc sc-amber"><div class="sc-lbl">Late</div><div class="sc-val" id="st-l">0</div><div class="sc-sub">after 10:30 AM</div></div>
+      <div class="sc sc-amber"><div class="sc-lbl">Late</div><div class="sc-val" id="st-l">0</div><div class="sc-sub">after 10:00 AM</div></div>
+      <div class="sc sc-purple"><div class="sc-lbl">On Leave</div><div class="sc-val" id="st-lv">0</div><div class="sc-sub">approved leave</div></div>
     </div>
+
+    <!-- This week overview -->
+    <div class="dash-grid">
+      <div class="analytics-card">
+        <div class="ch"><div class="ch-left"><div class="ch-dot" style="background:#854F0B"></div><span class="ch-title">This week</span></div></div>
+        <div class="week-grid" id="week-grid"></div>
+        <div class="week-legend">
+          <div class="wl-item"><div class="wl-dot" style="background:#639922"></div>Present</div>
+          <div class="wl-item"><div class="wl-dot" style="background:#EF9F27"></div>Late</div>
+          <div class="wl-item"><div class="wl-dot" style="background:#E24B4A"></div>Absent</div>
+          <div class="wl-item"><div class="wl-dot" style="background:#7C3AED"></div>Leave</div>
+        </div>
+      </div>
+      <div class="analytics-card">
+        <div class="ch"><div class="ch-left"><div class="ch-dot" style="background:#3B6D11"></div><span class="ch-title">Attendance rate (30d)</span></div></div>
+        <div class="mini-bar-wrap" id="att-bars"></div>
+      </div>
+    </div>
+
     <div class="card">
       <div class="ch">
         <div class="ch-left"><div class="ch-dot"></div><span class="ch-title">Today's attendance</span></div>
@@ -146,23 +276,65 @@ tr:hover td{background:#fafbff}
         <div class="hero-t" id="hc">00:00:00</div>
         <div class="hero-d" id="hd"></div>
         <div class="hero-info">
-          <div class="hi-item"><div class="hi-val">10:00 AM</div><div class="hi-lbl">Check-in time</div></div>
-          <div class="hi-item"><div class="hi-val">10:30 AM</div><div class="hi-lbl">Late after</div></div>
+          <div class="hi-item"><div class="hi-val">9:30 AM</div><div class="hi-lbl">Check-in time</div></div>
+          <div class="hi-item"><div class="hi-val">10:00 AM</div><div class="hi-lbl">Late after</div></div>
           <div class="hi-item"><div class="hi-val">5:00 PM</div><div class="hi-lbl">Check-out time</div></div>
+          <div class="hi-item"><div class="hi-val">8:00 PM</div><div class="hi-lbl">Auto-checkout</div></div>
         </div>
       </div>
       <div class="card">
         <div class="ch">
           <div class="ch-left"><div class="ch-dot" style="background:#EF9F27"></div><span class="ch-title">Mark attendance</span></div>
-          <span id="saving-lbl" style="font-size:12px;color:#888780;display:none"><span class="spinner"></span>Saving…</span>
+          <span id="saving-lbl"><span class="spinner"></span>Saving…</span>
         </div>
         <div class="cb">
           <div id="toast" class="toast"></div>
+
           <div class="ff"><label class="fl">Team member</label><select id="esel"></select></div>
-          <div class="ff"><label class="fl">Note (optional)</label><input type="text" id="ni" placeholder="e.g. Working remotely"/></div>
+
+          <!-- Work mode -->
+          <div class="ff">
+            <label class="fl">Work mode</label>
+            <div class="mode-btns">
+              <button class="mode-btn" id="mb-office" onclick="selectMode('office')"><span class="mode-icon">🏢</span>Office</button>
+              <button class="mode-btn" id="mb-home"   onclick="selectMode('home')"><span class="mode-icon">🏠</span>Home</button>
+              <button class="mode-btn" id="mb-hybrid" onclick="selectMode('hybrid')"><span class="mode-icon">🔀</span>Hybrid</button>
+            </div>
+          </div>
+
+          <div class="ff"><label class="fl">Note (optional)</label><input type="text" id="ni" placeholder="e.g. In a client meeting"/></div>
+
           <div class="br">
-            <button class="btn btn-in" onclick="doIn()">Check In</button>
-            <button class="btn btn-out" onclick="doOut()">Check Out</button>
+            <button class="btn btn-in"    onclick="doIn()">Check In</button>
+            <button class="btn btn-out"   onclick="doOut()">Check Out</button>
+            <button class="btn btn-leave" onclick="toggleLeave()">🗓 Leave</button>
+          </div>
+
+          <!-- Leave form -->
+          <div class="leave-form-wrap" id="leave-form-wrap">
+            <div class="leave-hint">Leave will be documented. The team member will be marked as on leave for today.</div>
+            <label class="fl">Reason for leave</label>
+            <textarea id="leave-reason" placeholder="e.g. Unwell today, will be back tomorrow..."></textarea>
+            <button class="btn-submit-leave" onclick="submitLeave()">Submit Leave</button>
+          </div>
+
+          <!-- Manual / forgot time -->
+          <div style="margin-top:14px;text-align:center">
+            <button onclick="toggleManual()" style="font-size:12px;color:#888780;background:none;border:none;cursor:pointer;text-decoration:underline">Forgot to check in/out? Enter time manually</button>
+          </div>
+          <div class="manual-time-wrap" id="manual-time-wrap">
+            <div class="manual-hint">⚠ Use only to correct a forgotten or missed check-in / check-out. Entries are tagged as manually edited.</div>
+            <div class="time-row">
+              <div style="flex:1">
+                <span class="time-label">Check-in time</span>
+                <input type="time" id="manual-in" />
+              </div>
+              <div style="flex:1">
+                <span class="time-label">Check-out time</span>
+                <input type="time" id="manual-out" />
+              </div>
+            </div>
+            <button class="btn-apply-manual" onclick="applyManual()">Apply Manual Times</button>
           </div>
         </div>
       </div>
@@ -172,11 +344,12 @@ tr:hover td{background:#fafbff}
   <!-- RECORDS -->
   <div class="sec" id="s-rec">
     <div class="rctrl">
-      <input class="rs" type="text" id="rsq" placeholder="Search name or role..." oninput="renderRec()"/>
+      <input class="rs" type="text" id="rsq" placeholder="Search name or role..." oninput="renderRec();renderHist()"/>
       <button class="fb on" onclick="setF('all',this)">All</button>
       <button class="fb" onclick="setF('present',this)">Present</button>
       <button class="fb" onclick="setF('absent',this)">Absent</button>
       <button class="fb" onclick="setF('late',this)">Late</button>
+      <button class="fb" onclick="setF('leave',this)">Leave</button>
     </div>
     <div class="card">
       <div class="ch">
@@ -185,7 +358,14 @@ tr:hover td{background:#fafbff}
       </div>
       <div style="overflow-x:auto">
         <table>
-          <thead><tr><th style="width:28%">Name</th><th style="width:24%">Role</th><th style="width:14%">In</th><th style="width:14%">Out</th><th style="width:20%">Status</th></tr></thead>
+          <thead><tr>
+            <th style="width:22%">Name</th>
+            <th style="width:18%">Role</th>
+            <th style="width:12%">Mode</th>
+            <th style="width:12%">In</th>
+            <th style="width:12%">Out</th>
+            <th style="width:24%">Status</th>
+          </tr></thead>
           <tbody id="rec-body"></tbody>
         </table>
       </div>
@@ -197,7 +377,15 @@ tr:hover td{background:#fafbff}
       </div>
       <div style="overflow-x:auto">
         <table>
-          <thead><tr><th style="width:16%">Date</th><th style="width:14%">Day</th><th style="width:22%">Name</th><th style="width:14%">In</th><th style="width:14%">Out</th><th style="width:20%">Status</th></tr></thead>
+          <thead><tr>
+            <th style="width:14%">Date</th>
+            <th style="width:11%">Day</th>
+            <th style="width:18%">Name</th>
+            <th style="width:10%">Mode</th>
+            <th style="width:11%">In</th>
+            <th style="width:11%">Out</th>
+            <th style="width:25%">Status</th>
+          </tr></thead>
           <tbody id="hist-body"></tbody>
         </table>
       </div>
@@ -207,37 +395,57 @@ tr:hover td{background:#fafbff}
 </div>
 
 <script>
-/* ── STEP 1: Paste your Apps Script URL here ── */
+/* ══════════════════════════════════════════════
+   CONFIGURATION
+══════════════════════════════════════════════ */
 const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbx67Ym0prhocIa72F2JTqFlP61PjWLlnB4airAsIdL3dxwNZ4TM-6uI3bodAqIGrPRJ/exec';
 
-/* ── Team ── */
 const TEAM = [
   {id:'mh', name:'Muhammad Hassan', role:'CEO',                 initials:'MH', bg:'#185FA5', tc:'#fff'},
   {id:'as', name:'Aqsa Sohail',     role:'COO',                 initials:'AS', bg:'#993556', tc:'#fff'},
   {id:'ms', name:'Mahnoor Shehzad', role:'CFO & Research Lead', initials:'MS', bg:'#0F6E56', tc:'#fff'},
 ];
 
-/* ── Time rules ── */
-const LATE_MINS = 10*60+30; // 10:30 AM
+/* Aqsa's schedule: Thu+Fri = full office 9:30–5pm, Mon/Tue/Wed = 2h remote (anytime) */
+const AQSA_SCHEDULE = {
+  1: {type:'remote', hours:2},  // Monday
+  2: {type:'remote', hours:2},  // Tuesday
+  3: {type:'remote', hours:2},  // Wednesday
+  4: {type:'office', hours:null}, // Thursday
+  5: {type:'office', hours:null}, // Friday
+};
 
-/* ── Weekend helpers ── */
+/* Expected hours per employee per weekday: null = use office default (7.5h) */
+const EMP_EXPECTED = {
+  'mh': { 1:7.5, 2:7.5, 3:7.5, 4:7.5, 5:7.5 },
+  'as': { 1:2,   2:2,   3:2,   4:7.5, 5:7.5 },
+  'ms': { 1:7.5, 2:7.5, 3:7.5, 4:7.5, 5:7.5 },
+};
+
+const LATE_MINS    = 10*60;     // 10:00 AM
+const AUTOOUT_MINS = 20*60;     // 8:00 PM
+const LAUNCH_DATE  = '2026-04-27';
+
+/* ══════════════════════════════════════════════
+   HELPERS
+══════════════════════════════════════════════ */
 const DAY_NAMES = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const DAY_SHORT = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+
 function isWeekend(dateStr){
-  const d = dateStr ? new Date(dateStr + 'T00:00:00') : new Date();
-  const day = d.getDay();
-  return day === 0 || day === 6;
+  const d = dateStr ? new Date(dateStr+'T00:00:00') : new Date();
+  return d.getDay()===0 || d.getDay()===6;
 }
 function isWeekendToday(){ return isWeekend(); }
-function dayName(dateStr){
-  const d = new Date(dateStr + 'T00:00:00');
-  return DAY_NAMES[d.getDay()];
-}
+function dayName(dateStr){ return DAY_NAMES[new Date(dateStr+'T00:00:00').getDay()]; }
+function dayShort(dateStr){ return DAY_SHORT[new Date(dateStr+'T00:00:00').getDay()]; }
+function todayISO(){ return new Date().toISOString().slice(0,10); }
+function nowHHMM(){ return new Date().toTimeString().slice(0,5); }
+function toMins(hhmm){ const[h,m]=hhmm.split(':').map(Number); return h*60+m; }
+function minsToHHMM(mins){ return `${String(Math.floor(mins/60)).padStart(2,'0')}:${String(mins%60).padStart(2,'0')}`; }
 
-/* ── localStorage helpers (30-day expiry) ── */
 function lsGet(k){
-  try{
-    const raw=localStorage.getItem(k);
-    if(!raw)return null;
+  try{ const raw=localStorage.getItem(k); if(!raw)return null;
     const o=JSON.parse(raw);
     if(o.exp&&Date.now()>o.exp){localStorage.removeItem(k);return null;}
     return o.val;
@@ -247,8 +455,8 @@ function lsSet(k,v,days){
   try{localStorage.setItem(k,JSON.stringify({val:v,exp:Date.now()+days*864e5}));}catch{}
 }
 
-const todayKey = () => 'zl_day_' + new Date().toISOString().slice(0,10);
-const HIST_KEY  = 'zl_hist_v4';
+const todayKey = () => 'zl_day2_' + new Date().toISOString().slice(0,10);
+const HIST_KEY  = 'zl_hist_v5';
 
 let TODAY = lsGet(todayKey()) || {};
 let HIST  = lsGet(HIST_KEY)  || [];
@@ -256,345 +464,545 @@ let HIST  = lsGet(HIST_KEY)  || [];
 function saveToday(){ lsSet(todayKey(), TODAY, 1.5); }
 function saveHist() { lsSet(HIST_KEY,  HIST,  30);  }
 
-/* ── Launch date — no absent records created before this date ── */
-const LAUNCH_DATE = '2026-04-27';
+/* ══════════════════════════════════════════════
+   WORK MODE
+══════════════════════════════════════════════ */
+let selectedMode = '';
 
-/* ── Auto-absent: fill missing weekday records ──
-   Looks at weekdays from LAUNCH_DATE up to yesterday.
-   For every weekday where a team member has NO record, inserts an absent row.
-   Only runs client-side for display — also pushed to Sheets via Apps Script trigger.
-── */
-function buildAbsentRecords(records){
-  const today    = new Date().toISOString().slice(0,10);
-  const existing = new Set(records.map(r => r.date + '|' + r.empId));
-  const result   = [...records];
-
-  // go back 30 days but never before LAUNCH_DATE
-  for(let i = 0; i < 30; i++){
-    const d   = new Date();
-    d.setDate(d.getDate() - i);
-    const iso = d.toISOString().slice(0,10);
-    if(iso < LAUNCH_DATE) break;              // don't go before launch
-    if(isWeekend(iso)) continue;             // skip weekends
-    if(iso === today)  continue;             // today handled live
-
-    TEAM.forEach(emp => {
-      if(!existing.has(iso + '|' + emp.id)){
-        result.push({
-          date:     iso,
-          empId:    emp.id,
-          name:     emp.name,
-          empName:  emp.name,
-          role:     emp.role,
-          empRole:  emp.role,
-          checkIn:  null,
-          checkOut: null,
-          note:     'Auto-marked absent',
-          late:     false,
-          absent:   true,
-        });
-      }
-    });
-  }
-
-  // sort newest first
-  result.sort((a,b) => b.date.localeCompare(a.date) || a.name.localeCompare(b.name));
-  return result;
+function selectMode(m){
+  selectedMode = m;
+  ['office','home','hybrid'].forEach(x=>{
+    const b = document.getElementById('mb-'+x);
+    b.className = 'mode-btn' + (m===x ? ' sel-'+x : '');
+  });
 }
 
-/* ── Google Sheets sync ── */
+/* ══════════════════════════════════════════════
+   LEAVE FORM
+══════════════════════════════════════════════ */
+function toggleLeave(){
+  const w = document.getElementById('leave-form-wrap');
+  w.classList.toggle('open');
+  document.getElementById('manual-time-wrap').classList.remove('open');
+}
+
+function submitLeave(){
+  if(isWeekendToday()){ showToast('No attendance on weekends.', false); return; }
+  const id = document.getElementById('esel').value;
+  if(!id){ showToast('Please select a team member.', false); return; }
+  const emp = TEAM.find(e=>e.id===id);
+  const reason = document.getElementById('leave-reason').value.trim();
+  if(!reason){ showToast('Please enter a reason for leave.', false); return; }
+  if(TODAY[id]&&TODAY[id].ci){ showToast(`${emp.name} already checked in — cannot mark as on leave.`, false); return; }
+
+  TODAY[id] = {ci:null, co:null, note:reason, mode:'leave', leave:true};
+  saveToday();
+  HIST.unshift({empId:id, name:emp.name, empName:emp.name, role:emp.role, empRole:emp.role,
+    date:todayISO(), checkIn:null, checkOut:null, note:reason, mode:'leave',
+    late:false, absent:false, leave:true});
+  saveHist();
+  document.getElementById('leave-reason').value = '';
+  document.getElementById('leave-form-wrap').classList.remove('open');
+  showToast(`${emp.name} marked as on leave. Reason logged.`, true);
+  pushToSheets({action:'leave', empId:id, empName:emp.name, empRole:emp.role, date:todayISO(), note:reason});
+  updateDash();
+  if(document.getElementById('s-rec').classList.contains('on')){ renderRec(); renderHist(); }
+}
+
+/* ══════════════════════════════════════════════
+   MANUAL TIME CORRECTION
+══════════════════════════════════════════════ */
+function toggleManual(){
+  const w = document.getElementById('manual-time-wrap');
+  w.classList.toggle('open');
+  document.getElementById('leave-form-wrap').classList.remove('open');
+}
+
+function applyManual(){
+  if(isWeekendToday()){ showToast('No attendance on weekends.', false); return; }
+  const id = document.getElementById('esel').value;
+  if(!id){ showToast('Please select a team member.', false); return; }
+  const emp = TEAM.find(e=>e.id===id);
+  const inVal  = document.getElementById('manual-in').value;
+  const outVal = document.getElementById('manual-out').value;
+
+  if(!inVal && !outVal){ showToast('Enter at least one time.', false); return; }
+  if(inVal && outVal && toMins(inVal) >= toMins(outVal)){
+    showToast('Check-out must be after check-in.', false); return;
+  }
+
+  if(!TODAY[id]) TODAY[id] = {ci:null, co:null, note:'', mode:selectedMode||'', manual:true};
+  else TODAY[id].manual = true;
+
+  if(inVal)  TODAY[id].ci = inVal;
+  if(outVal) TODAY[id].co = outVal;
+  TODAY[id].mode = selectedMode || TODAY[id].mode || '';
+
+  saveToday();
+
+  let entry = HIST.find(h=>h.empId===id && h.date===todayISO());
+  if(entry){
+    if(inVal)  entry.checkIn  = inVal;
+    if(outVal) entry.checkOut = outVal;
+    entry.manual = true;
+    entry.mode   = selectedMode || entry.mode || '';
+    if(inVal) entry.late = toMins(inVal) > LATE_MINS;
+  } else {
+    const late = inVal ? toMins(inVal) > LATE_MINS : false;
+    HIST.unshift({empId:id, name:emp.name, empName:emp.name, role:emp.role, empRole:emp.role,
+      date:todayISO(), checkIn:inVal||null, checkOut:outVal||null,
+      note:document.getElementById('ni').value.trim() || 'Manual entry',
+      mode:selectedMode||'', late, absent:false, leave:false, manual:true});
+  }
+  saveHist();
+
+  const parts = [];
+  if(inVal)  parts.push(`in: ${inVal}`);
+  if(outVal) parts.push(`out: ${outVal}`);
+  showToast(`${emp.name} — manual time set (${parts.join(', ')}).`, 'info');
+  document.getElementById('manual-time-wrap').classList.remove('open');
+  document.getElementById('manual-in').value  = '';
+  document.getElementById('manual-out').value = '';
+  updateDash();
+  if(document.getElementById('s-rec').classList.contains('on')){ renderRec(); renderHist(); }
+}
+
+/* ══════════════════════════════════════════════
+   AUTO CHECKOUT @ 8 PM
+══════════════════════════════════════════════ */
+function runAutoCheckout(){
+  if(isWeekendToday()) return;
+  const now = toMins(nowHHMM());
+  if(now < AUTOOUT_MINS) return;
+
+  let anyAutoCheckedOut = false;
+  TEAM.forEach(emp=>{
+    const r = TODAY[emp.id];
+    if(r && r.ci && !r.co && !r.leave){
+      TODAY[emp.id].co       = '20:00';
+      TODAY[emp.id].autoOut  = true;
+      saveToday();
+      const entry = HIST.find(h=>h.empId===emp.id && h.date===todayISO() && !h.checkOut);
+      if(entry){ entry.checkOut = '20:00'; entry.autoOut = true; }
+      saveHist();
+      pushToSheets({action:'autoCheckOut', empId:emp.id, empName:emp.name, empRole:emp.role, time:'20:00', date:todayISO()});
+      anyAutoCheckedOut = true;
+    }
+  });
+  if(anyAutoCheckedOut){
+    updateDash();
+    if(document.getElementById('s-rec').classList.contains('on')){ renderRec(); renderHist(); }
+  }
+
+  // show banner after 8pm
+  const banner = document.getElementById('autoout-banner');
+  const msg    = document.getElementById('autoout-msg');
+  if(now >= AUTOOUT_MINS){
+    banner.style.display = 'flex';
+    msg.textContent = 'Auto-checkout ran at 8:00 PM — all checked-in members have been checked out.';
+  }
+}
+
+/* ══════════════════════════════════════════════
+   SHEETS SYNC
+══════════════════════════════════════════════ */
 const sheetsReady = () => SHEETS_URL && SHEETS_URL !== 'YOUR_APPS_SCRIPT_URL_HERE';
 
 function showSyncPill(label, ok){
-  const pill = document.getElementById('sync-pill');
-  const dot  = document.getElementById('sync-dot');
-  const lbl  = document.getElementById('sync-label');
-  pill.style.display = 'flex';
-  dot.className = 'sync-dot' + (ok ? '' : ' warn');
-  lbl.textContent = label;
+  const pill=document.getElementById('sync-pill'),dot=document.getElementById('sync-dot'),lbl=document.getElementById('sync-label');
+  pill.style.display='flex'; dot.className='sync-dot'+(ok?'':' warn'); lbl.textContent=label;
 }
 
 async function pushToSheets(payload){
   if(!sheetsReady()) return;
-  document.getElementById('saving-lbl').style.display = 'inline';
+  document.getElementById('saving-lbl').style.display='inline';
   try{
-    await fetch(SHEETS_URL + '?' + new URLSearchParams(payload).toString(), {method:'GET', mode:'no-cors'});
-    showSyncPill('Saved to Sheets', true);
-  }catch{
-    showSyncPill('Sync error', false);
-  }finally{
-    document.getElementById('saving-lbl').style.display = 'none';
-  }
+    await fetch(SHEETS_URL+'?'+new URLSearchParams(payload).toString(),{method:'GET',mode:'no-cors'});
+    showSyncPill('Saved to Sheets',true);
+  }catch{ showSyncPill('Sync error',false); }
+  finally{ document.getElementById('saving-lbl').style.display='none'; }
 }
 
 async function fetchFromSheets(){
   if(!sheetsReady()) return;
-  showSyncPill('Syncing…', true);
+  showSyncPill('Syncing…',true);
   try{
-    const res  = await fetch(SHEETS_URL + '?action=getAll');
-    const data = await res.json();
-    if(data && data.records){
-      HIST = buildAbsentRecords(data.records);
+    const res=await fetch(SHEETS_URL+'?action=getAll');
+    const data=await res.json();
+    if(data&&data.records){
+      HIST=buildAbsentRecords(data.records);
       saveHist();
-      const tod = new Date().toISOString().slice(0,10);
-      TODAY = {};
-      data.records.filter(r => r.date === tod && !r.absent).forEach(r => {
-        TODAY[r.empId] = {ci: r.checkIn, co: r.checkOut||null, note: r.note||''};
+      const tod=new Date().toISOString().slice(0,10);
+      TODAY={};
+      data.records.filter(r=>r.date===tod&&!r.absent).forEach(r=>{
+        TODAY[r.empId]={ci:r.checkIn,co:r.checkOut||null,note:r.note||'',mode:r.mode||'',leave:r.leave||false,manual:r.manual||false,autoOut:r.autoOut||false};
       });
       saveToday();
       updateDash();
       if(document.getElementById('s-rec').classList.contains('on')){ renderRec(); renderHist(); }
     }
-    showSyncPill('Synced', true);
+    showSyncPill('Synced',true);
   }catch{
-    // fallback: build absent records from local history
-    HIST = buildAbsentRecords(HIST.filter(h => !h.absent));
-    showSyncPill('Offline — local data', false);
+    HIST=buildAbsentRecords(HIST.filter(h=>!h.absent));
+    showSyncPill('Offline — local data',false);
   }
 }
 
-/* ── Helpers ── */
-function todayISO(){ return new Date().toISOString().slice(0,10); }
-function nowHHMM() { return new Date().toTimeString().slice(0,5); }
-function toMins(hhmm){ const[h,m]=hhmm.split(':').map(Number); return h*60+m; }
+/* ══════════════════════════════════════════════
+   AUTO-ABSENT FILL
+══════════════════════════════════════════════ */
+function buildAbsentRecords(records){
+  const today=new Date().toISOString().slice(0,10);
+  const existing=new Set(records.map(r=>r.date+'|'+r.empId));
+  const result=[...records];
+  for(let i=0;i<30;i++){
+    const d=new Date(); d.setDate(d.getDate()-i);
+    const iso=d.toISOString().slice(0,10);
+    if(iso<LAUNCH_DATE) break;
+    if(isWeekend(iso)) continue;
+    if(iso===today) continue;
+    TEAM.forEach(emp=>{
+      if(!existing.has(iso+'|'+emp.id)){
+        result.push({date:iso,empId:emp.id,name:emp.name,empName:emp.name,
+          role:emp.role,empRole:emp.role,checkIn:null,checkOut:null,
+          note:'Auto-marked absent',mode:'',late:false,absent:true,leave:false});
+      }
+    });
+  }
+  result.sort((a,b)=>b.date.localeCompare(a.date)||a.name.localeCompare(b.name));
+  return result;
+}
 
+/* ══════════════════════════════════════════════
+   STATUS & BADGES
+══════════════════════════════════════════════ */
 function getStatus(id){
-  const r = TODAY[id];
-  if(!r || !r.ci) return isWeekendToday() ? 'weekend' : 'absent';
-  return toMins(r.ci) > LATE_MINS ? 'late' : 'present';
+  const r=TODAY[id];
+  if(r&&r.leave)   return 'leave';
+  if(!r||!r.ci)    return isWeekendToday()?'weekend':'absent';
+  if(r.co)         return 'out';
+  return toMins(r.ci)>LATE_MINS ? 'late' : 'present';
 }
 
-function badge(s){
-  const m = {
-    present: `<span class="badge b-p"><span class="dot6 dg"></span>Present</span>`,
-    absent:  `<span class="badge b-a"><span class="dot6 dr"></span>Absent</span>`,
-    late:    `<span class="badge b-l"><span class="dot6 da"></span>Late</span>`,
-    out:     `<span class="badge b-o"><span class="dot6 db"></span>Checked out</span>`,
-    weekend: `<span class="badge" style="background:#f0f4ff;color:#888780;border:0.5px solid #dde3f0"><span class="dot6" style="background:#888780"></span>Weekend</span>`,
+function badge(s, extras){
+  const e = extras||{};
+  const autoTag = e.autoOut  ? ` <span class="tag-label tg-autoout">auto-out</span>` : '';
+  const manTag  = e.manual   ? ` <span class="tag-label tg-manual">manual</span>`   : '';
+  const m={
+    present:`<span class="badge b-p"><span class="dot6 dg"></span>Present</span>`,
+    absent: `<span class="badge b-a"><span class="dot6 dr"></span>Absent</span>`,
+    late:   `<span class="badge b-l"><span class="dot6 da"></span>Late</span>`,
+    out:    `<span class="badge b-o"><span class="dot6 db"></span>Checked out</span>`,
+    leave:  `<span class="badge b-leave"><span class="dot6 dp"></span>On leave</span>`,
+    weekend:`<span class="badge" style="background:#f0f4ff;color:#888780"><span class="dot6" style="background:#888780"></span>Weekend</span>`,
   };
-  return m[s] || m.absent;
+  return (m[s]||m.absent)+autoTag+manTag;
 }
 
-/* ── Clock ── */
-function clock(){
-  const n = new Date();
-  const t = n.toTimeString().slice(0,8);
-  const d = n.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-  ['tc','hc'].forEach(id=>{ const e=document.getElementById(id); if(e) e.textContent=t; });
-  ['td','hd'].forEach(id=>{ const e=document.getElementById(id); if(e) e.textContent=d; });
-  const dm=document.getElementById('dash-d'); if(dm) dm.textContent=n.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
-  const rl=document.getElementById('rec-today-lbl'); if(rl) rl.textContent=n.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+function modeBadge(mode){
+  if(!mode||mode==='leave') return '';
+  const m={
+    office: `<span class="badge b-office" style="font-size:10px;padding:2px 7px">🏢 Office</span>`,
+    home:   `<span class="badge b-home"   style="font-size:10px;padding:2px 7px">🏠 Home</span>`,
+    hybrid: `<span class="badge b-hybrid" style="font-size:10px;padding:2px 7px">🔀 Hybrid</span>`,
+  };
+  return m[mode]||'';
 }
 
-/* ── Weekend UI handling ── */
-function applyWeekendUI(){
-  const wb = document.getElementById('weekend-banner');
-  const mw = document.getElementById('mark-weekend-notice');
-  const mf = document.getElementById('mark-form-wrap');
-  if(isWeekendToday()){
-    const todayName = DAY_NAMES[new Date().getDay()];
-    const msg = `<div class="weekend-notice"><strong>🎉 It's ${todayName}!</strong>No attendance required. Enjoy your weekend — records only track Monday to Friday.</div>`;
-    if(wb) wb.innerHTML = msg;
-    if(mw) mw.innerHTML = msg;
-    if(mf) mf.style.display = 'none';
-  } else {
-    if(wb) wb.innerHTML = '';
-    if(mw) mw.innerHTML = '';
-    if(mf) mf.style.display = 'block';
-  }
+/* ══════════════════════════════════════════════
+   CHECK IN
+══════════════════════════════════════════════ */
+function doIn(){
+  if(isWeekendToday()){ showToast('No attendance on weekends.',false); return; }
+  const id=document.getElementById('esel').value;
+  if(!id){ showToast('Please select a team member.',false); return; }
+  const emp=TEAM.find(e=>e.id===id);
+  if(TODAY[id]&&TODAY[id].leave){ showToast(`${emp.name} is already marked as on leave today.`,false); return; }
+  if(TODAY[id]&&TODAY[id].ci){ showToast(`${emp.name} already checked in at ${TODAY[id].ci}.`,false); return; }
+  const note=document.getElementById('ni').value.trim();
+  const t=nowHHMM();
+  const late=toMins(t)>LATE_MINS;
+  TODAY[id]={ci:t,co:null,note,mode:selectedMode,leave:false};
+  saveToday();
+  HIST.unshift({empId:id,name:emp.name,empName:emp.name,role:emp.role,empRole:emp.role,
+    date:todayISO(),checkIn:t,checkOut:null,note,mode:selectedMode,late,absent:false,leave:false});
+  saveHist();
+  document.getElementById('ni').value='';
+  showToast(`${emp.name} checked in at ${t}.${late?' (Late)':''}`,true);
+  pushToSheets({action:'checkIn',empId:id,empName:emp.name,empRole:emp.role,time:t,note,mode:selectedMode,date:todayISO()});
+  updateDash();
+  if(document.getElementById('s-rec').classList.contains('on')){ renderRec(); renderHist(); }
 }
 
-/* ── Dashboard ── */
+/* ══════════════════════════════════════════════
+   CHECK OUT
+══════════════════════════════════════════════ */
+function doOut(){
+  if(isWeekendToday()){ showToast('No attendance on weekends.',false); return; }
+  const id=document.getElementById('esel').value;
+  if(!id){ showToast('Please select a team member.',false); return; }
+  const emp=TEAM.find(e=>e.id===id);
+  if(TODAY[id]&&TODAY[id].leave){ showToast(`${emp.name} is on leave today.`,false); return; }
+  if(!TODAY[id]||!TODAY[id].ci){ showToast(`${emp.name} has not checked in yet.`,false); return; }
+  if(TODAY[id].co){ showToast(`${emp.name} already checked out at ${TODAY[id].co}.`,false); return; }
+  const t=nowHHMM();
+  TODAY[id].co=t;
+  saveToday();
+  const entry=HIST.find(h=>h.empId===id&&h.date===todayISO()&&!h.checkOut);
+  if(entry) entry.checkOut=t;
+  saveHist();
+  showToast(`${emp.name} checked out at ${t}.`,true);
+  pushToSheets({action:'checkOut',empId:id,empName:emp.name,empRole:emp.role,time:t,date:todayISO()});
+  updateDash();
+  if(document.getElementById('s-rec').classList.contains('on')){ renderRec(); renderHist(); }
+}
+
+/* ══════════════════════════════════════════════
+   DASHBOARD
+══════════════════════════════════════════════ */
 function updateDash(){
   applyWeekendUI();
+  runAutoCheckout();
+
   if(isWeekendToday()){
-    document.getElementById('st-p').textContent = '—';
-    document.getElementById('st-a').textContent = '—';
-    document.getElementById('st-l').textContent = '—';
-    document.getElementById('dash-list').innerHTML = '';
+    ['st-p','st-a','st-l','st-lv'].forEach(id=>{ document.getElementById(id).textContent='—'; });
+    document.getElementById('dash-list').innerHTML='';
     return;
   }
-  let p=0, l=0;
+
+  let p=0,l=0,lv=0;
   TEAM.forEach(e=>{
     const s=getStatus(e.id);
-    if(s==='present') p++;
-    if(s==='late')    { p++; l++; }
+    if(s==='present')        p++;
+    if(s==='late')           { p++; l++; }
+    if(s==='out')            p++;
+    if(s==='leave')          lv++;
   });
-  document.getElementById('st-p').textContent = p;
-  document.getElementById('st-a').textContent = TEAM.length - p;
-  document.getElementById('st-l').textContent = l;
+  document.getElementById('st-p').textContent=p;
+  document.getElementById('st-a').textContent=TEAM.length-p-lv;
+  document.getElementById('st-l').textContent=l;
+  document.getElementById('st-lv').textContent=lv;
 
-  document.getElementById('dash-list').innerHTML = TEAM.map(e=>{
-    const r  = TODAY[e.id];
-    const s  = getStatus(e.id);
-    const bs = r && r.co ? badge('out') : badge(s);
-    const ti = r && r.ci ? `In: ${r.ci}${r.co ? ' · Out: '+r.co : ''}` : 'Not yet checked in';
+  document.getElementById('dash-list').innerHTML=TEAM.map(e=>{
+    const r =TODAY[e.id];
+    const s =getStatus(e.id);
+    const bs=badge(s,{autoOut:r&&r.autoOut, manual:r&&r.manual});
+    const ti=r&&r.leave ? `On leave — ${r.note||''}` :
+              r&&r.ci   ? `In: ${r.ci}${r.co?' · Out: '+r.co:''}` : 'Not yet checked in';
+    const modeTag = r&&r.mode ? modeBadge(r.mode) : '';
+    const schedNote = getScheduleNote(e.id);
     return `<div class="emp-row">
       <div class="av" style="background:${e.bg};color:${e.tc}">${e.initials}</div>
-      <div class="en"><div class="ename">${e.name}</div><div class="erole">${e.role}</div></div>
-      <div class="eright">${bs}<div class="etime">${ti}</div>${r&&r.note?`<div class="enote">${r.note}</div>`:''}</div>
+      <div class="en">
+        <div class="ename">${e.name}</div>
+        <div class="erole">${e.role}${schedNote ? ' · <span style="color:#888780;font-size:11px">'+schedNote+'</span>' : ''}</div>
+      </div>
+      <div class="eright">${bs} ${modeTag}<div class="etime">${ti}</div></div>
+    </div>`;
+  }).join('');
+
+  renderWeekGrid();
+  renderAttBars();
+}
+
+/* ── Aqsa's schedule note ── */
+function getScheduleNote(id){
+  if(id !== 'as') return '';
+  const dow = new Date().getDay();
+  const sch = AQSA_SCHEDULE[dow];
+  if(!sch) return '';
+  if(sch.type==='remote') return `Remote today (${sch.hours}h)`;
+  return `Full day`;
+}
+
+/* ── This-week mini grid ── */
+function renderWeekGrid(){
+  const container = document.getElementById('week-grid');
+  if(!container) return;
+  const today = new Date();
+  const dow   = today.getDay(); // 0=Sun
+  // get Mon-Fri of this week
+  const days  = [];
+  for(let i=1;i<=5;i++){
+    const d = new Date(today);
+    d.setDate(today.getDate() - dow + i);
+    days.push(d.toISOString().slice(0,10));
+  }
+
+  container.innerHTML = days.map(iso=>{
+    const isToday = iso === todayISO();
+    const isFuture = iso > todayISO();
+    const label = dayShort(iso);
+    const dots  = TEAM.map(emp=>{
+      if(isFuture) return `<div class="ddot none"></div>`;
+      if(isToday){
+        const s = getStatus(emp.id);
+        const cls = s==='leave'?'leave': s==='present'||s==='out'?'present': s==='late'?'late':'absent';
+        return `<div class="ddot ${cls}" title="${emp.name}: ${s}"></div>`;
+      }
+      const hRecs = HIST.filter(h=>h.date===iso&&h.empId===emp.id);
+      const h = hRecs[0];
+      if(!h)               return `<div class="ddot absent"></div>`;
+      if(h.leave)          return `<div class="ddot leave"></div>`;
+      if(h.absent)         return `<div class="ddot absent"></div>`;
+      if(h.late)           return `<div class="ddot late"></div>`;
+      if(h.checkIn)        return `<div class="ddot present"></div>`;
+      return `<div class="ddot absent"></div>`;
+    }).join('');
+    return `<div class="day-cell">
+      <div class="day-label" style="color:${isToday?'#185FA5':'#888780'};font-weight:${isToday?700:500}">${label}</div>
+      <div class="day-dot-row">${dots}</div>
     </div>`;
   }).join('');
 }
 
-/* ── Select ── */
-function populateSel(){
-  const s = document.getElementById('esel');
-  s.innerHTML = '<option value="">— select team member —</option>';
-  TEAM.forEach(e=>{
-    const o = document.createElement('option');
-    o.value = e.id;
-    o.textContent = `${e.name} — ${e.role}`;
-    s.appendChild(o);
-  });
+/* ── 30-day attendance rate bars (hours-based) ── */
+function renderAttBars(){
+  const container = document.getElementById('att-bars');
+  if(!container) return;
+
+  container.innerHTML = TEAM.map(emp=>{
+    const allRecs = HIST.filter(h => h.empId===emp.id && !isWeekend(h.date));
+
+    let totalExpected = 0;
+    let totalWorked   = 0;
+
+    allRecs.forEach(r => {
+      const dow = new Date(r.date + 'T00:00:00').getDay();
+      const expected = (EMP_EXPECTED[emp.id] && EMP_EXPECTED[emp.id][dow]) ?? 7.5;
+      totalExpected += expected;
+
+      if(r.leave){
+        totalWorked += expected; // leave = full credit
+      } else if(r.checkIn && r.checkOut){
+        const worked = (toMins(r.checkOut) - toMins(r.checkIn)) / 60;
+        totalWorked += Math.min(worked, expected);
+      } else if(r.checkIn && !r.checkOut){
+        const worked = (toMins(nowHHMM()) - toMins(r.checkIn)) / 60;
+        totalWorked += Math.min(Math.max(worked, 0), expected);
+      }
+      // absent: 0
+    });
+
+    const pct   = totalExpected > 0 ? Math.round((totalWorked / totalExpected) * 100) : 0;
+    const color = pct>=80?'#639922': pct>=60?'#EF9F27':'#E24B4A';
+    const tooltip = emp.id==='as'
+      ? `${emp.name}: hours-based (Mon–Wed 2h remote, Thu–Fri 7.5h office)`
+      : `${emp.name}: ${Math.round(totalWorked*10)/10}h / ${totalExpected}h expected`;
+
+    return `<div class="mini-bar-row">
+      <div class="mini-bar-name" title="${emp.name}">${emp.name.split(' ')[0]}</div>
+      <div class="mini-bar-track" title="${tooltip}"><div class="mini-bar-fill" style="width:${Math.min(pct,100)}%;background:${color}"></div></div>
+      <div class="mini-bar-pct">${pct}%</div>
+    </div>`;
+  }).join('');
 }
 
-/* ── Toast ── */
-function showToast(msg, ok){
-  const t = document.getElementById('toast');
-  t.className = 'toast ' + (ok ? 'tok' : 'terr');
-  t.textContent = msg;
-  t.style.display = 'block';
-  setTimeout(()=>{ t.style.display='none'; }, 3500);
-}
-
-/* ── Check In ── */
-function doIn(){
-  if(isWeekendToday()){ showToast('No attendance on weekends.', false); return; }
-  const id  = document.getElementById('esel').value;
-  if(!id){ showToast('Please select a team member.', false); return; }
-  const emp  = TEAM.find(e=>e.id===id);
-  const note = document.getElementById('ni').value.trim();
-  if(TODAY[id]&&TODAY[id].ci){ showToast(`${emp.name} already checked in at ${TODAY[id].ci}.`, false); return; }
-  const t    = nowHHMM();
-  const late = toMins(t) > LATE_MINS;
-  TODAY[id]  = {ci:t, co:null, note};
-  saveToday();
-  HIST.unshift({empId:id, name:emp.name, empName:emp.name, role:emp.role, empRole:emp.role, date:todayISO(), checkIn:t, checkOut:null, note, late, absent:false});
-  saveHist();
-  document.getElementById('ni').value = '';
-  showToast(`${emp.name} checked in at ${t}.${late?' (Late)':''}`, true);
-  pushToSheets({action:'checkIn', empId:id, empName:emp.name, empRole:emp.role, time:t, note, date:todayISO()});
-  updateDash();
-  if(document.getElementById('s-rec').classList.contains('on')){ renderRec(); renderHist(); }
-}
-
-/* ── Check Out ── */
-function doOut(){
-  if(isWeekendToday()){ showToast('No attendance on weekends.', false); return; }
-  const id  = document.getElementById('esel').value;
-  if(!id){ showToast('Please select a team member.', false); return; }
-  const emp = TEAM.find(e=>e.id===id);
-  if(!TODAY[id]||!TODAY[id].ci){ showToast(`${emp.name} has not checked in yet.`, false); return; }
-  if(TODAY[id].co){ showToast(`${emp.name} already checked out at ${TODAY[id].co}.`, false); return; }
-  const t       = nowHHMM();
-  TODAY[id].co  = t;
-  saveToday();
-  const entry   = HIST.find(h=>h.empId===id && h.date===todayISO() && !h.checkOut);
-  if(entry) entry.checkOut = t;
-  saveHist();
-  showToast(`${emp.name} checked out at ${t}.`, true);
-  pushToSheets({action:'checkOut', empId:id, empName:emp.name, empRole:emp.role, time:t, date:todayISO()});
-  updateDash();
-  if(document.getElementById('s-rec').classList.contains('on')){ renderRec(); renderHist(); }
-}
-
-/* ── Records ── */
-let af = 'all';
-function setF(f, el){
-  af = f;
+/* ══════════════════════════════════════════════
+   RECORDS
+══════════════════════════════════════════════ */
+let af='all';
+function setF(f,el){
+  af=f;
   document.querySelectorAll('.fb').forEach(b=>b.classList.remove('on'));
   el.classList.add('on');
-  renderRec();
+  renderRec(); renderHist();
 }
 
 function renderRec(){
-  const q     = document.getElementById('rsq').value.toLowerCase();
-  const tbody = document.getElementById('rec-body');
-  const today = isWeekendToday();
-
-  if(today){
-    tbody.innerHTML = `<tr><td colspan="5"><div class="empty">Weekend — no attendance tracked today.</div></td></tr>`;
+  const q=document.getElementById('rsq').value.toLowerCase();
+  const tbody=document.getElementById('rec-body');
+  if(isWeekendToday()){
+    tbody.innerHTML=`<tr><td colspan="6"><div class="empty">Weekend — no attendance tracked today.</div></td></tr>`;
     return;
   }
-
-  const rows = TEAM.filter(e=>{
-    const match = e.name.toLowerCase().includes(q) || e.role.toLowerCase().includes(q);
-    const s     = getStatus(e.id);
-    return match && (af==='all' || s===af);
+  const rows=TEAM.filter(e=>{
+    const match=e.name.toLowerCase().includes(q)||e.role.toLowerCase().includes(q);
+    const s=getStatus(e.id);
+    if(af==='all')     return match;
+    if(af==='leave')   return match && s==='leave';
+    if(af==='present') return match && (s==='present'||s==='out');
+    if(af==='absent')  return match && s==='absent';
+    if(af==='late')    return match && s==='late';
+    return match;
   });
-  if(!rows.length){ tbody.innerHTML=`<tr><td colspan="5"><div class="empty">No records match.</div></td></tr>`; return; }
-  tbody.innerHTML = rows.map(e=>{
-    const r = TODAY[e.id];
-    const s = getStatus(e.id);
+  if(!rows.length){ tbody.innerHTML=`<tr><td colspan="6"><div class="empty">No records match.</div></td></tr>`; return; }
+  tbody.innerHTML=rows.map(e=>{
+    const r=TODAY[e.id];
+    const s=getStatus(e.id);
+    const bs=r&&r.co?badge('out',{autoOut:r.autoOut,manual:r.manual}):badge(s,{manual:r&&r.manual});
     return `<tr>
       <td><div style="display:flex;align-items:center;gap:8px">
         <div class="av" style="width:28px;height:28px;font-size:11px;background:${e.bg};color:${e.tc};border:none">${e.initials}</div>
-        <span style="font-weight:500;color:#2C2C2A">${e.name}</span>
+        <span style="font-weight:500">${e.name}</span>
       </div></td>
       <td style="color:#888780">${e.role}</td>
-      <td>${r&&r.ci ? r.ci : '—'}</td>
-      <td>${r&&r.co ? r.co : '—'}</td>
-      <td>${r&&r.co ? badge('out') : badge(s)}</td>
+      <td>${r&&r.mode?modeBadge(r.mode):'—'}</td>
+      <td>${r&&r.ci?r.ci:'—'}</td>
+      <td>${r&&r.co?r.co:'—'}</td>
+      <td>${bs}</td>
     </tr>`;
   }).join('');
 }
 
 function renderHist(){
-  const tbody = document.getElementById('hist-body');
-  const hc    = document.getElementById('hist-count');
-  const q     = document.getElementById('rsq').value.toLowerCase();
+  const tbody=document.getElementById('hist-body');
+  const hc=document.getElementById('hist-count');
+  const q=document.getElementById('rsq').value.toLowerCase();
 
-  // filter by search + active filter (excluding weekend rows — they never exist)
-  const filtered = HIST.filter(r=>{
-    const matchQ  = r.name.toLowerCase().includes(q) || (r.role||'').toLowerCase().includes(q);
-    if(af === 'all')     return matchQ;
-    if(af === 'absent')  return matchQ && r.absent;
-    if(af === 'late')    return matchQ && r.late && !r.absent;
-    if(af === 'present') return matchQ && !r.absent && !r.late;
+  const filtered=HIST.filter(r=>{
+    const matchQ=r.name.toLowerCase().includes(q)||(r.role||'').toLowerCase().includes(q);
+    if(af==='all')     return matchQ;
+    if(af==='leave')   return matchQ && r.leave;
+    if(af==='absent')  return matchQ && r.absent;
+    if(af==='late')    return matchQ && r.late && !r.absent;
+    if(af==='present') return matchQ && !r.absent && !r.late && !r.leave;
     return matchQ;
   });
 
   if(!filtered.length){
-    tbody.innerHTML=`<tr><td colspan="6"><div class="empty">No history records found.</div></td></tr>`;
+    tbody.innerHTML=`<tr><td colspan="7"><div class="empty">No history records found.</div></td></tr>`;
     if(hc) hc.textContent=''; return;
   }
   if(hc) hc.textContent=`${filtered.length} record${filtered.length!==1?'s':''}`;
 
-  tbody.innerHTML = filtered.map(r=>{
-    const [yy,mm,dd] = r.date.split('-');
-    const ds         = `${dd}/${mm}/${yy}`;
-    const isToday    = r.date === todayISO();
-    const dn         = dayName(r.date);
-    const s          = r.checkOut ? 'out' : (r.absent ? 'absent' : (r.late ? 'late' : (r.checkIn ? 'present' : 'absent')));
-    const autoTag    = r.absent ? ` <span class="tag-label tg-auto">auto</span>` : '';
-    const todayTag   = isToday  ? ` <span class="tag-label tg-today">today</span>` : '';
+  tbody.innerHTML=filtered.map(r=>{
+    const [yy,mm,dd]=r.date.split('-');
+    const ds=`${dd}/${mm}/${yy}`;
+    const isToday=r.date===todayISO();
+    const dn=dayName(r.date);
+    const s=r.leave?'leave':r.checkOut?'out':r.absent?'absent':r.late?'late':r.checkIn?'present':'absent';
+    const autoTag=r.absent?` <span class="tag-label tg-auto">auto</span>`:'';
+    const todayTag=isToday?` <span class="tag-label tg-today">today</span>`:'';
+    const manTag=r.manual?` <span class="tag-label tg-manual">manual</span>`:'';
+    const autoOutTag=r.autoOut?` <span class="tag-label tg-autoout">auto-out</span>`:'';
+    const leaveTag=r.leave?` <span class="tag-label tg-leave">leave</span>`:'';
     return `<tr>
-      <td><span style="font-size:12px;color:#2C2C2A">${ds}</span>${todayTag}${autoTag}</td>
+      <td><span style="font-size:12px">${ds}</span>${todayTag}${autoTag}${manTag}${leaveTag}</td>
       <td style="color:#888780;font-size:12px">${dn}</td>
-      <td style="font-weight:500;color:#2C2C2A">${r.name}</td>
-      <td>${r.checkIn  || '—'}</td>
-      <td>${r.checkOut || '—'}</td>
+      <td style="font-weight:500">${r.name}</td>
+      <td>${r.mode?modeBadge(r.mode):'—'}</td>
+      <td>${r.checkIn||'—'}</td>
+      <td>${r.checkOut?r.checkOut+(r.autoOut?' <span style="font-size:10px;color:#C2410C">auto</span>':''):'—'}</td>
       <td>${badge(s)}</td>
     </tr>`;
   }).join('');
 }
 
-/* ── Clear today ── */
+/* ══════════════════════════════════════════════
+   MISC
+══════════════════════════════════════════════ */
 function clearToday(){
   if(!confirm("Clear today's records?")) return;
-  TODAY = {};
+  TODAY={};
   saveToday();
-  HIST  = HIST.filter(h => h.date !== todayISO());
-  HIST  = buildAbsentRecords(HIST.filter(h => !h.absent));
+  HIST=HIST.filter(h=>h.date!==todayISO());
+  HIST=buildAbsentRecords(HIST.filter(h=>!h.absent));
   saveHist();
-  updateDash();
-  renderRec();
-  renderHist();
+  updateDash(); renderRec(); renderHist();
 }
 
-/* ── Tab switching ── */
-function go(sec, el){
+function go(sec,el){
   document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
   document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
   document.getElementById('s-'+sec).classList.add('on');
@@ -604,13 +1012,62 @@ function go(sec, el){
   if(sec==='mark') { applyWeekendUI(); }
 }
 
-/* ── Init ── */
+function showToast(msg,ok){
+  const t=document.getElementById('toast');
+  t.className='toast '+(ok===true?'tok':ok===false?'terr':'tinfo');
+  t.textContent=msg;
+  t.style.display='block';
+  setTimeout(()=>{ t.style.display='none'; },3500);
+}
+
+function applyWeekendUI(){
+  const wb=document.getElementById('weekend-banner');
+  const mw=document.getElementById('mark-weekend-notice');
+  const mf=document.getElementById('mark-form-wrap');
+  if(isWeekendToday()){
+    const todayName=DAY_NAMES[new Date().getDay()];
+    const msg=`<div class="weekend-notice"><strong>🎉 It's ${todayName}!</strong>No attendance required. Enjoy your weekend — records only track Monday to Friday.</div>`;
+    if(wb) wb.innerHTML=msg;
+    if(mw) mw.innerHTML=msg;
+    if(mf) mf.style.display='none';
+  } else {
+    if(wb) wb.innerHTML='';
+    if(mw) mw.innerHTML='';
+    if(mf) mf.style.display='block';
+  }
+}
+
+function clock(){
+  const n=new Date();
+  const t=n.toTimeString().slice(0,8);
+  const d=n.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  ['tc','hc'].forEach(id=>{ const e=document.getElementById(id); if(e) e.textContent=t; });
+  ['td','hd'].forEach(id=>{ const e=document.getElementById(id); if(e) e.textContent=d; });
+  const dm=document.getElementById('dash-d'); if(dm) dm.textContent=n.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+  const rl=document.getElementById('rec-today-lbl'); if(rl) rl.textContent=n.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+}
+
+function populateSel(){
+  const s=document.getElementById('esel');
+  s.innerHTML='<option value="">— select team member —</option>';
+  TEAM.forEach(e=>{
+    const o=document.createElement('option');
+    o.value=e.id;
+    o.textContent=`${e.name} — ${e.role}`;
+    s.appendChild(o);
+  });
+}
+
+/* ══════════════════════════════════════════════
+   INIT
+══════════════════════════════════════════════ */
 populateSel();
 clock();
 updateDash();
 fetchFromSheets();
 setInterval(clock, 1000);
 setInterval(fetchFromSheets, 60000);
+setInterval(runAutoCheckout, 60000); // check every minute for 8pm auto-checkout
 </script>
 </body>
 </html>
